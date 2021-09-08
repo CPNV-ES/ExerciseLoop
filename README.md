@@ -13,3 +13,10 @@ The objective is to reproduce the following website [https://stormy-plateau-5448
 ```php
 php -S localhost:8000
 ```
+
+## Lib
+
+- [FastRoute](https://github.com/nikic/FastRoute)
+- [normalize.css](https://github.com/necolas/normalize.css)
+- [Milligram](https://github.com/milligram/milligram)
+- [Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
