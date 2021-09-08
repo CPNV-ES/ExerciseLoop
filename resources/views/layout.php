@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <header class="heading answering">
+    <header class="heading">
         <section class="container">
             <a href="/"><img src="/public/images/logo.png" /></a>
             <?= isset($pageName) ? '<span>' . $pageName . '</span>' : '' ?>
