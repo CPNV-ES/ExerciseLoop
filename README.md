@@ -14,6 +14,9 @@ The objective is to reproduce the following website [https://stormy-plateau-5448
 php -S localhost:8000
 ```
 
+## Mockup
+Interactive [prototype](https://www.figma.com/proto/6V3spUnNzcCOZJEgozH3uS/Untitled?page-id=0%3A1&node-id=1%3A38&viewport=271%2C48%2C0.69&scaling=contain&starting-point-node-id=1%3A38) of the views.
+
 ## Lib
 
 - [FastRoute](https://github.com/nikic/FastRoute)
