@@ -3,6 +3,11 @@
 require './vendor/autoload.php';
 require './config/config.php';
 
+use \App\Controllers\ExerciseAnsweringController;
+use \App\Controllers\ExerciseCreationController;
+use \App\Controllers\ExerciseListController;
+use \App\Controllers\ExerciseManagementController;
+
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $router) {
 
     $router->get('/', function () {
@@ -10,31 +15,27 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
     });
 
     $router->get('/exercises/answering', function () {
-        ob_start();
-        require VIEW_ROOT . "/exercise-list.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        require 'app/Controllers/ExerciseListController.php';
+        $exerciseController = new ExerciseListController();
+        $exerciseController->getView();
     });
 
     $router->get('/exercise/{id:\d+}', function () {
-        ob_start();
-        require VIEW_ROOT . "/exercise-answering.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        require 'app/Controllers/ExerciseAnsweringController.php';
+        $exerciseController = new ExerciseAnsweringController();
+        $exerciseController->getView();
     });
 
     $router->addRoute(['GET', 'POST'], '/exercises/new', function () {
-        ob_start();
-        require VIEW_ROOT . "/exercise-creation.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        require 'app/Controllers/ExerciseCreationController.php';
+        $exerciseController = new ExerciseCreationController();
+        $exerciseController->getView();
     });
 
     $router->get('/exercises', function () {
-        ob_start();
-        require VIEW_ROOT . "/exercise-management.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        require 'app/Controllers/ExerciseManagementController.php';
+        $exerciseController = new ExerciseManagementController();
+        $exerciseController->getView();
     });
 });
 
