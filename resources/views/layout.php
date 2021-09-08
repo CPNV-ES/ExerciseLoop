@@ -16,7 +16,8 @@
     <header class="heading">
         <section class="container">
             <a href="/"><img src="/public/images/logo.png" /></a>
-            <?= isset($pageName) ? '<span>' . $pageName . '</span>' : '' ?>
+            <?= isset($exerciseLabel) ? '<span class="exercise-label">' . $exerciseLabel . '</span>' : null ?>
+            <?= isset($exerciseTitle) ? '<span class="exercise-title">' . $exerciseTitle . '</span>' : null ?>
         </section>
     </header>
     <?= $content ?>

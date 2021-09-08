@@ -6,7 +6,8 @@ class ExerciseAnsweringController
 {
     public function getView()
     {
-        $pageName = '{{ Exercise name }}';
+        $exerciseLabel = 'Exercise: ';
+        $exerciseTitle = '{{ Exercise title }}';
 
         ob_start();
         require VIEW_ROOT . "/exercise-answering.php";

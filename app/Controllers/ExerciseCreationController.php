@@ -6,8 +6,8 @@ class ExerciseCreationController
 {
     public function getView()
     {
-        $pageName = 'New exercise';
-        
+        $exerciseLabel = 'New exercise';
+
         ob_start();
         require VIEW_ROOT . "/exercise-creation.php";
         $content = ob_get_clean();
