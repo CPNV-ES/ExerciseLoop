@@ -16,6 +16,7 @@
     <header class="heading answering">
         <section class="container">
             <a href="/"><img src="/public/images/logo.png" /></a>
+            <?= isset($pageName) ? '<span>' . $pageName . '</span>' : '' ?>
         </section>
     </header>
     <?= $content ?>

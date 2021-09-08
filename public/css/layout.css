@@ -1,7 +1,11 @@
-header {
-  height: 50px;
+header, section {
+  height: 5rem;
 }
 
 header img {
   width: 50px;
+}
+
+header span {
+  color: white;
 }
