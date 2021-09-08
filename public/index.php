@@ -3,6 +3,7 @@
 require './vendor/autoload.php';
 require './config/config.php';
 
+// Controllers
 use \App\Controllers\ExerciseAnsweringController;
 use \App\Controllers\ExerciseCreationController;
 use \App\Controllers\ExerciseEditingController;
@@ -17,37 +18,32 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
 
     $router->get('/exercises/answering', function () {
         require 'app/Controllers/ExerciseListController.php';
-        $exerciseController = new ExerciseListController();
-        $exerciseController->getView();
+        (new ExerciseListController)->getView();
     });
 
-    $router->get('/exercise/{id:\d+}', function () {
+    $router->get('/exercise/{id:\d+}/answer', function () {
         require 'app/Controllers/ExerciseAnsweringController.php';
-        $exerciseController = new ExerciseAnsweringController();
-        $exerciseController->getView();
+        (new ExerciseAnsweringController)->getView();
     });
 
     $router->get('/exercises/new', function () {
         require 'app/Controllers/ExerciseCreationController.php';
-        $exerciseController = new ExerciseCreationController();
-        $exerciseController->getView();
+        (new ExerciseCreationController)->getView();
+
     });
     $router->post('/exercises/new', function () {
         require 'app/Controllers/ExerciseCreationController.php';
-        $exerciseController = new ExerciseCreationController();
-        $exerciseController->createExercise();
+        (new ExerciseCreationController)->createExercise();
     });
 
     $router->get('/exercise/{id:\d+}/edit', function () {
         require 'app/Controllers/ExerciseEditingController.php';
-        $exerciseController = new ExerciseEditingController();
-        $exerciseController->getView();
+        (new ExerciseEditingController)->getView();
     });
 
     $router->get('/exercises', function () {
         require 'app/Controllers/ExerciseManagementController.php';
-        $exerciseController = new ExerciseManagementController();
-        $exerciseController->getView();
+        (new ExerciseManagementController)->getView();
     });
 });
 
