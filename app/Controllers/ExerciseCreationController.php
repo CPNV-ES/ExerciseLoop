@@ -14,4 +14,13 @@ class ExerciseCreationController
         require VIEW_ROOT . "/layout.php";
     }
 
+    public function createExercise()
+    {
+        // Logics
+        // ...
+
+        // if ok then redirect to the editing view of this exercise (1)
+        header("Location: /exercise/1/edit");
+        exit();
+    }
 }

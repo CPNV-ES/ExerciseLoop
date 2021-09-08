@@ -5,6 +5,7 @@ require './config/config.php';
 
 use \App\Controllers\ExerciseAnsweringController;
 use \App\Controllers\ExerciseCreationController;
+use \App\Controllers\ExerciseEditingController;
 use \App\Controllers\ExerciseListController;
 use \App\Controllers\ExerciseManagementController;
 
@@ -26,9 +27,20 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
         $exerciseController->getView();
     });
 
-    $router->addRoute(['GET', 'POST'], '/exercises/new', function () {
+    $router->get('/exercises/new', function () {
         require 'app/Controllers/ExerciseCreationController.php';
         $exerciseController = new ExerciseCreationController();
+        $exerciseController->getView();
+    });
+    $router->post('/exercises/new', function () {
+        require 'app/Controllers/ExerciseCreationController.php';
+        $exerciseController = new ExerciseCreationController();
+        $exerciseController->createExercise();
+    });
+
+    $router->get('/exercise/{id:\d+}/edit', function () {
+        require 'app/Controllers/ExerciseEditingController.php';
+        $exerciseController = new ExerciseEditingController();
         $exerciseController->getView();
     });
 
