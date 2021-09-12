@@ -1,8 +1,118 @@
-div {
-  width: 100%;
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  --infinityBackground: #383742;
+
+  min-height: 500px;
   text-align: center;
 }
 
-h2 {
-    font-size: 300px;
+#main-container {
+  margin: 25px 0 25px 0;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#header-container {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0 200px;
+}
+
+span {
+  line-height: 200px;
+  font-size: 300px;
+  color: var(--infinityBackground);
+  order: 3;
+  flex-grow: 3;
+}
+
+span:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+svg {
+  width: 750px;
+  fill: none;
+  stroke-width: 8;
+  stroke: url(#col);
+  stroke-dasharray: 60 172;
+  stroke-linecap: round;
+  animation: infinity 4s linear infinite;
+  -moz-animation: infinity 4s linear infinite;
+  position: absolute;
+}
+
+svg:nth-of-type(1) {
+  animation: none;
+  stroke: var(--infinityBackground);
+  stroke-width: 7;
+  stroke-dasharray: none;
+}
+
+svg:nth-of-type(2) {
+  filter: blur(2px);
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+@keyframes infinity {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 232;
+  }
+}
+
+@-moz-keyframes infinity {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 232;
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  body {
+    min-height: 700px;
+  }
+
+  #main-container {
+    margin: 0 15% 0 15%;
+  }
+
+  #header-container {
+    flex-direction: column;
+    gap: 60px 0;
+  }
+
+  span {
+    font-size: 250px;
+  }
+
+  svg {
+    width: 525px;
+  }
+
+  #footer-container a {
+    width: 100%;
+  }
 }
