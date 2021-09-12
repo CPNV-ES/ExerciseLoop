@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  
   <title>ExerciseLooper</title>
 
   <link rel="stylesheet" href="/node_modules/normalize.css/normalize.css">
