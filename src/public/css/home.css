@@ -1,0 +1,40 @@
+header {
+  padding-bottom: 20px;
+  text-align: center;
+  color: white;
+  background-color: var(--purple);
+}
+
+header img {
+  margin-bottom: 10px;
+  padding: 2rem;
+}
+
+header h1 {
+  font-size: 4.6rem;
+  letter-spacing: 1.1rem;
+}
+
+#navbar {
+  margin-top: 20px;
+}
+
+#navbar .button {
+    border: none;
+}
+
+#navbar .button:hover {
+  background-color: #606d76;
+}
+
+#navbar .answering {
+  background-color: var(--purple);
+}
+
+#navbar .managing {
+  background-color: var(--yellow);
+}
+
+#navbar .results {
+  background-color: var(--green);
+}

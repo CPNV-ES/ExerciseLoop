@@ -1,0 +1,22 @@
+header {
+  background-color: var(--purple);
+}
+
+#ansering-list .row {
+  margin-top: 20px;
+  background-color: #eee;
+  border-radius: 0.4rem;
+  text-align: center;
+}
+
+#ansering-list .card {
+    margin: 0;
+}
+
+#ansering-list .card .title {
+  margin: 10px;
+}
+
+#ansering-list .card .button {
+  width: 100%;
+}

@@ -1,0 +1,23 @@
+header section {
+  height: 50px;
+  display: flex;
+}
+
+header img {
+  height: 100%;
+}
+
+header .exercise-label,
+header .exercise-title {
+  line-height: 50px;
+  color: white;
+}
+
+header .exercise-label {
+  margin-left: 20px;
+}
+
+header .exercise-title {
+  margin-left: 5px;
+  font-weight: bold;
+}
