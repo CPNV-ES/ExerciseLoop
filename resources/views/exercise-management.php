@@ -18,14 +18,14 @@
           <tr>
             <td>Exercise 3</td>
             <td>
-              <a title="Manage fields" href="exercise/3/edit"><i class="fa fa-edit"></i></a>
+              <a title="Manage fields" href=""><i class="fa fa-edit"></i></a>
               <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/367"><i class="fa fa-trash"></i></a>
             </td>
           </tr>
           <tr>
             <td>Exercise 4</td>
             <td>
-              <a title="Manage fields" href="exercise/4/edit"><i class="fa fa-edit"></i></a>
+              <a title="Manage fields" href=""><i class="fa fa-edit"></i></a>
               <a data-confirm="Are you sure?" title="Destroy" rel="nofollow" data-method="delete" href="/exercises/368"><i class="fa fa-trash"></i></a>
             </td>
           </tr>
