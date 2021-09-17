@@ -29,7 +29,6 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
     $router->get('/exercises/new', function () {
         require 'app/Controllers/ExerciseCreationController.php';
         (new ExerciseCreationController)->getView();
-
     });
     $router->post('/exercises/new', function () {
         require 'app/Controllers/ExerciseCreationController.php';
@@ -62,7 +61,7 @@ $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:                   // ... 404 Not Found
-        echo '404 Not Found';
+        require VIEW_ROOT . "/errors/404.php";
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:          // ... 405 Method Not Allowed
         $allowedMethods = $routeInfo[1];
