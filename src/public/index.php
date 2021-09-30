@@ -4,46 +4,29 @@ require './vendor/autoload.php';
 require './config/config.php';
 
 // Controllers
-use \App\Controllers\ExerciseAnsweringController;
-use \App\Controllers\ExerciseCreationController;
-use \App\Controllers\ExerciseEditingController;
-use \App\Controllers\ExerciseListController;
-use \App\Controllers\ExerciseManagementController;
+use App\Controllers\HomeController,
+    App\Controllers\ExerciseAnsweringController,
+    App\Controllers\ExerciseCreationController,
+    App\Controllers\ExerciseEditingController,
+    App\Controllers\ExerciseListController,
+    App\Controllers\ExerciseManagementController;
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $router) {
+    $router->get('/', [HomeController::class, 'index']);
 
-    $router->get('/', function () {
-        require VIEW_ROOT . "/home.php";
-    });
+    $router->get('/exercises/answering', [ExerciseListController::class, 'index']);
 
-    $router->get('/exercises/answering', function () {
-        require 'app/Controllers/ExerciseListController.php';
-        (new ExerciseListController)->getView();
-    });
+    $router->get('/exercise/{id:\d+}/answer', [ExerciseAnsweringController::class, 'index']);
+    $router->post('/exercise/{id:\d+}/answer', [ExerciseAnsweringController::class, 'answer']);
+    $router->get('/exercise/{id:\d+}/{path:\w+}/answer', [ExerciseAnsweringController::class, 'personalAnswer']);
+    $router->post('/exercise/{id:\d+}/{path:\w+}/answer', [ExerciseAnsweringController::class, 'editPersonalAnswer']);
 
-    $router->get('/exercise/{id:\d+}/answer', function () {
-        require 'app/Controllers/ExerciseAnsweringController.php';
-        (new ExerciseAnsweringController)->getView();
-    });
+    $router->get('/exercises/new', [ExerciseCreationController::class, 'index']);
+    $router->post('/exercises/new', [ExerciseCreationController::class, 'createExercise']);
 
-    $router->get('/exercises/new', function () {
-        require 'app/Controllers/ExerciseCreationController.php';
-        (new ExerciseCreationController)->getView();
-    });
-    $router->post('/exercises/new', function () {
-        require 'app/Controllers/ExerciseCreationController.php';
-        (new ExerciseCreationController)->createExercise();
-    });
+    $router->get('/exercise/{id:\d+}/edit', [ExerciseEditingController::class, 'index']);
 
-    $router->get('/exercise/{id:\d+}/edit', function () {
-        require 'app/Controllers/ExerciseEditingController.php';
-        (new ExerciseEditingController)->getView();
-    });
-
-    $router->get('/exercises', function () {
-        require 'app/Controllers/ExerciseManagementController.php';
-        (new ExerciseManagementController)->getView();
-    });
+    $router->get('/exercises', [ExerciseManagementController::class, 'index']);
 });
 
 // Fetch method and URI from somewhere
@@ -68,9 +51,14 @@ switch ($routeInfo[0]) {
         echo '405 Method Not Allowed';
         break;
     case FastRoute\Dispatcher::FOUND:
-        $handler = $routeInfo[1];
-        $vars = $routeInfo[2];
+        $controllerClass = $routeInfo[1][0];
+        $action = $routeInfo[1][1];
+        $parameters = $routeInfo[2];
 
-        print $handler($vars);
+        if ($httpMethod == 'POST') {
+            $parameters['form'] = $_POST;
+        }
+
+        (new $controllerClass)->$action($parameters);
         break;
 }
