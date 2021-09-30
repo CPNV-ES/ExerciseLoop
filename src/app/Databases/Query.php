@@ -8,11 +8,15 @@ class Query
 
     protected string $class;
     protected string $table;
-    protected ?array $params = null;
+    protected ?array $params;
 
-    public function __construct(string $class)
+    /**
+     * @param Model $class is the Model calling the query
+     */
+    public function __construct(string $class, ?array $params = null)
     {
         $this->class = $class;
         $this->table = $this->toTable($class);
+        $this->params = $params;
     }
 }

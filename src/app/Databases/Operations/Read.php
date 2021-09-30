@@ -9,12 +9,14 @@ use App\Databases\Connector;
 class Read extends Query
 {
     private array $columns;
-    private ?array $conditions = null;
-    private int $limit;
-    private int $offset;
-    protected string $query = '';
-    protected bool $returnAsDirectObject = false;
+    private ?array $conditions;
+    private string $query;
+    private bool $returnAsDirectObject = false;
 
+    /**
+     * @param Model $class is the Model calling the query
+     * @param array $columns is an array of object attributes
+     */
     public function __construct(string $class, array $columns)
     {
         $this->columns = $columns;
@@ -23,7 +25,11 @@ class Read extends Query
         return $this;
     }
 
-    public function where($column, $value): self
+    /**
+     * @param string $column of the where clause
+     * @param string|int $value of the where clause
+     */
+    public function where(string $column, string|int $value): self
     {
         $this->conditions[] = $column;
         $this->params[$column] = $value;
@@ -31,31 +37,14 @@ class Read extends Query
         return $this;
     }
 
-    public function orderByAsc($column): void
-    {
-        // TODO
-    }
-
-    public function orderByDesc($column): void
-    {
-        // TODO
-    }
-
+    /**
+     * Execute the request by specifying to directly return the object without an array
+     * if this does not exist, then return null
+     */
     public function first(): Model | null
     {
-        $this->limit = 1;
         $this->returnAsDirectObject = true;
         return $this->get();
-    }
-
-    public function limit($limit): void
-    {
-        $this->limit = $limit;
-    }
-
-    public function skip($offset): void
-    {
-        $this->offset = $offset;
     }
 
     /**
@@ -78,30 +67,20 @@ class Read extends Query
             }
         }
 
-        if (isset($limit) && $limit != 0) {
-            $query .= ' LIMIT :limit';
-            $params['limit'] = $limit;
-        }
-
-        if (isset($offset) && $offset != 0) {
-            $query .= ' OFFSET :offset';
-            $params['offset'] = $offset;
-        }
-
         $this->query = $query;
-        return $this->execute($this, $this->returnAsDirectObject);
+        return $this->execute();
     }
 
     /**
      * @return Model[]|Model|null
      */
-    private function execute(Query $query, ?bool $returnAsDirectObject = false):  array | Model | null
+    private function execute(): array | Model | null
     {
-        $stmt = Connector::connect()->prepare($query->query);
-        $stmt->execute($query->params);
-        $stmt->setFetchMode(\PDO::FETCH_CLASS, $query->class);
+        $stmt = Connector::connect()->prepare($this->query);
+        $stmt->execute($this->params);
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, $this->class);
         $result = $stmt->fetchAll();
 
-        return $returnAsDirectObject ? (empty($result) ? null : reset($result)) : $result;
+        return $this->returnAsDirectObject ? (empty($result) ? null : reset($result)) : $result;
     }
 }

@@ -9,16 +9,21 @@ class Update extends Query
 {
     private array $conditions;
 
-    public function __construct(string $class, array $values)
+    /**
+     * @param Model $class is the Model calling the query
+     * @param array $params is an associative array of columns with there new values
+     */
+    public function __construct(string $class, array $params)
     {
-        $this->params = $values;
-
-        parent::__construct($class);
-        $this->buildQuery();
+        parent::__construct($class, $params);
+        $this->build();
         $this->execute();
     }
 
-    private function buildQuery()
+    /**
+     * Build the query
+     */
+    private function build()
     {
         $this->conditions = array_splice($this->params, 0, 1); // Split conditions and columns in different arrays
 
@@ -28,13 +33,16 @@ class Update extends Query
             $query .= $key . ' = :' . $key . ($key !== array_key_last($this->params) ? ',' : null);
         }
 
-        $query .= ' WHERE ' . array_key_first($this->conditions) . ' = :' . array_key_first($this->conditions); //  Conditions only look for primary id, loop it if multiple ids need to match
+        $query .= ' WHERE ' . array_key_first($this->conditions) . ' = :' . array_key_first($this->conditions);
 
         $this->query = $query;
     }
 
+    /**
+     * Execute the query
+     */
     private function execute()
     {
-        Connector::connect()->prepare($this->query)->execute(array_merge($this->params, $this->conditions)); // Array of all prepared statements
+        Connector::connect()->prepare($this->query)->execute(array_merge($this->params, $this->conditions));
     }
 }

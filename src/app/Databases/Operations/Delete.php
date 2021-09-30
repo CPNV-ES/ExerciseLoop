@@ -7,22 +7,30 @@ use App\Databases\Connector;
 
 class Delete extends Query
 {
-    public function __construct(string $class, array $values)
+    /**
+     * @param Model $class is the Model calling the query
+     * @param array $params is an associative array with the primary id as key and is value as value
+     */
+    public function __construct(string $class, array $params)
     {
-        $this->params = $values;
-
-        parent::__construct($class);
-        $this->buildQuery();
+        parent::__construct($class, $params);
+        $this->build();
         $this->execute();
     }
 
-    private function buildQuery()
+    /**
+     * Build the query
+     */
+    private function build()
     {
         $this->query = 'DELETE FROM ' . $this->table . ' WHERE ' . array_key_first($this->params) . ' = :' . array_key_first($this->params);
     }
 
+    /**
+     * Execute the query
+     */
     private function execute()
     {
-        Connector::connect()->prepare($this->query)->execute($this->params);    
+        Connector::connect()->prepare($this->query)->execute($this->params);
     }
 }
