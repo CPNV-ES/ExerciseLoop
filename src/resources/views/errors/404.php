@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="/node_modules/normalize.css/normalize.css">
     <link rel="stylesheet" href="/node_modules/milligram/dist/milligram.min.css">
-    <link rel="stylesheet" href="public/css/errors/404.css">
+    <link rel="stylesheet" href="/public/css/errors/404.css">
 </head>
 
 <body>
