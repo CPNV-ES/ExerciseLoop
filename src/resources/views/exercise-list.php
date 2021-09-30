@@ -4,17 +4,15 @@
 
 <section class="container">
   <ul id="ansering-list">
+
+  <?php foreach ($exercises as $exercise) : ?>
     <li class="row">
       <div class="column card">
-        <div class="title">Exercise 1</div>
-        <a class="button" href="/exercise/1/answer">Take it</a>
+        <div class="title"><?= $exercise->title ?></div>
+        <a class="button" href="/exercise/<?= $exercise->id ?>/answer">Take it</a>
       </div>
     </li>
-    <li class="row">
-      <div class="column card">
-        <div class="title">Exercise 2</div>
-        <a class="button" href="/exercise/2/answer">Take it</a>
-      </div>
-    </li>
+    <?php endforeach ?>
+
   </ul>
 </section>

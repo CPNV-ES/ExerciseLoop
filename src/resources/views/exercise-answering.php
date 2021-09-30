@@ -4,17 +4,18 @@
 
 <div class="container">
   <h1>Your take</h1>
-  <p>If you'd like to come back later to finish, simply submit it with blanks</p>
+  <p><?= $exerciseTips ?></p>
 
-  <form action="/exercises/343/fulfillments" accept-charset="UTF-8" method="post">
-    <input type="hidden" value="488" name="fulfillment[answers_attributes][][field_id]" id="fulfillment_answers_attributes__field_id" />
-    <div class="field">
-      <label for="fulfillment_answers_attributes__value">23</label>
-      <input type="text" name="fulfillment[answers_attributes][][value]" id="fulfillment_answers_attributes__value" />
-    </div>
+  <form id="form-exercise" action="/exercise/<?= $exercise->id, isset($submission) ? ('/' .$submission->path . '/answer') : '/answer' ?>" accept-charset="UTF-8" method="post">
+    <?php foreach ($questions as $question) : ?>
+      <div class="field">
+        <label for="<?= $question->question ?>"><?= $question->question ?></label>
+        <input type="text" name="<?= $question->question ?>" id="<?= $question->question ?>" value="<?= isset($submission) ? @$submission->answer($question)->answer : '' ?>" />
+      </div>
+    <?php endforeach ?>
 
     <div class="actions">
-      <input type="submit" name="commit" value="Save" data-disable-with="Save" />
+      <button type="submit" form="form-exercise">Save</button>
     </div>
   </form>
 </div>
