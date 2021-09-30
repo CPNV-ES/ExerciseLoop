@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class ExerciseCreationController
 {
-    public function getView()
+    public function index()
     {
         $exerciseLabel = 'New exercise';
 

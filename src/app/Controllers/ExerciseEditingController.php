@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class ExerciseEditingController
 {
-    public function getView()
+    public function index()
     {
         $exerciseLabel = 'Exercise:';
         $exerciseTitle = '{{ Exercise title }}';
