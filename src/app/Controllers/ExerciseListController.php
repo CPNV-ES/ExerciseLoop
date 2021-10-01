@@ -12,7 +12,7 @@ class ExerciseListController
      */
     public function index()
     {
-        $exercises = Exercises::where('state_id',States::where('slug', 'ANSWER')->first()->id)->get();
+        $exercises = Exercises::whereSlug("ANSWER")->get();
 
         ob_start();
         require VIEW_ROOT . "/exercise-list.php";
