@@ -2,12 +2,21 @@
 
 namespace App\Controllers;
 
+use App\Models\Exercises;
+
 class ExerciseEditingController
 {
-    public function index()
+    public function index($parameters)
     {
+        $exercise = Exercises::find($parameters['id']);
+
+        if (empty($exercise)) {
+            header("Location: /404");
+            exit();
+        }
+
         $exerciseLabel = 'Exercise:';
-        $exerciseTitle = '{{ Exercise title }}';
+        $exerciseTitle = $exercise->title;
 
         ob_start();
         require VIEW_ROOT . "/exercise-editing.php";

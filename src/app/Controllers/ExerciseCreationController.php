@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Models\Exercises;
+use App\Models\States;
+
 class ExerciseCreationController
 {
     public function index()
@@ -14,13 +17,11 @@ class ExerciseCreationController
         require VIEW_ROOT . "/layout.php";
     }
 
-    public function createExercise()
+    public function createExercise($parameters)
     {
-        // Logics
-        // ...
+        $exercise = Exercises::create(['title' => $parameters['form']['title'], 'state_id' => States::slug('BUILD')]);
 
-        // if ok then redirect to the editing view of this exercise (1)
-        header("Location: /exercise/1/edit");
+        header("Location: /exercise/". $exercise->id . "/edit");
         exit();
     }
 }
