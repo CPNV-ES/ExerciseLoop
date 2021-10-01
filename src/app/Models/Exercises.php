@@ -23,9 +23,4 @@ class Exercises extends Model
     {
         return States::find($this->state_id);
     }
-
-    public static function whereSlug($slug)
-    {
-        return Exercises::where('state_id',States::where('slug', $slug)->first()->id);
-    }
 }
