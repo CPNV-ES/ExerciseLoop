@@ -15,7 +15,17 @@ class Exercises extends Model
     protected int $state_id;
 
     public function questions()
-    {   
+    {
         return Questions::where('exercise_id', $this->id)->get();
+    }
+
+    public function state()
+    {
+        return States::find($this->state_id);
+    }
+
+    public static function whereSlug($slug)
+    {
+        return Exercises::where('state_id',States::where('slug', $slug)->first()->id);
     }
 }
