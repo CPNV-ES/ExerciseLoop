@@ -19,6 +19,7 @@ class ExerciseEditingController
 
         $exerciseLabel = 'Exercise:';
         $exerciseTitle = $exercise->title;
+        $questions = $exercise->questions();
 
         ob_start();
         require VIEW_ROOT . "/exercise-editing.php";
@@ -28,7 +29,6 @@ class ExerciseEditingController
 
     public function createQuestion($parameters)
     {
-        var_dump($parameters);
         Questions::create(['question' => $parameters['form']['field']['label'],'exercise_id' =>$parameters['id'],'type_id' => Types::slug($parameters['form']['field']["value_kind"])]);
 
         header("Location: /exercise/". $parameters['id'] . "/edit");
