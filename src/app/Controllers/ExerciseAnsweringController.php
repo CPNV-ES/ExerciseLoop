@@ -46,9 +46,16 @@ class ExerciseAnsweringController
 
         $questions = $exercise->questions();
 
-        $path = md5(uniqid(rand(), true));
-        $submission = Submissions::create(['path' => $path, 'timestamp' => date('Y-m-d H:i:s')]);
-
+        do {
+            $isUniquePath = true;
+            $path = uniqid(rand());
+            
+            try {
+                $submission = Submissions::create(['path' => $path, 'timestamp' => date('Y-m-d H:i:s')]);
+            } catch (\PDOException $e) {
+                $isUniquePath = false;
+            }
+        } while (!$isUniquePath);
 
         $answerIndex = 0;
         foreach ($parameters['form'] as $answer) {
