@@ -25,6 +25,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
     $router->post('/exercises/new', [ExerciseCreationController::class, 'createExercise']);
 
     $router->get('/exercise/{id:\d+}/edit', [ExerciseEditingController::class, 'index']);
+    $router->post('/exercises/{id:\d+}/edit',[ExerciseEditingController::class, 'createQuestion']);
 
     $router->get('/exercises', [ExerciseManagementController::class, 'index']);
 });
