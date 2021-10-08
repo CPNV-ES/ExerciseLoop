@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Exercises;
 use App\Models\Questions;
 use App\Models\Types;
+use App\Models\States;
 
 class ExerciseEditingController
 {
@@ -29,9 +30,19 @@ class ExerciseEditingController
 
     public function createQuestion($parameters)
     {
-        Questions::create(['question' => $parameters['form']['field']['label'],'exercise_id' =>$parameters['id'],'type_id' => Types::slug($parameters['form']['field']["value_kind"])]);
+        Questions::create(['question' => $parameters['form']['field']['label'], 'exercise_id' => $parameters['id'], 'type_id' => Types::slug($parameters['form']['field']["value_kind"])]);
 
-        header("Location: /exercise/". $parameters['id'] . "/edit");
+        header("Location: /exercise/" . $parameters['id'] . "/edit");
         exit();
+    }
+
+    public function changeStatus($parameters)
+    {
+        $exercice = Exercises::find($parameters['id']);
+        $exercice->state_id = States::slug($parameters['status']);
+        $exercice->save();
+        header("Location: /exercises");
+        exit();
+
     }
 }

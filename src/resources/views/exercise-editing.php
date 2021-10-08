@@ -24,17 +24,16 @@
                 </tbody>
             </table>
 
-            <a data-confirm="Are you sure? You won&#39;t be able to further edit this exercise" class="button"
-               rel="nofollow" data-method="put" href="/exercises/411?exercise%5Bstatus%5D=answering"><i
-                        class="fa fa-comment"></i> Complete and be ready for answers</a>
+            <form action="/exercise/<?=$exercise->id?>/edit/status/answer" method="post">
+            <input type="submit" value="Complete and be ready for answers" onclick="return confirm('Are you sure?You wont be able to further edit this exercise');" />
+            </form>
+
 
         </div>
         <div class="column">
             <h1>New Field</h1>
-            <form action="/exercises/<?= $exercise->id ?>/edit" accept-charset="UTF-8" method="post"><input name="utf8"
-                                                                                                            type="hidden"
-                                                                                                            value="&#x2713;"/><input
-                        type="hidden" name="authenticity_token"
+            <form action="/exercise/<?= $exercise->id ?>/edit" accept-charset="UTF-8" method="post">
+                <input name="utf8" type="hidden" value="&#x2713;"/><input type="hidden" name="authenticity_token"
                         value="G7bvuUztEHLMtcqm1ZR9Nyy6JRBbSSmj3s7CPWzhzOe7bbY2/KJhd8R8bPiBbADIUy12w7jwd7mBjiawrnu/jg=="/>
 
                 <div class="field">

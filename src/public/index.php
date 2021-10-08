@@ -16,16 +16,18 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
 
     $router->get('/exercises/answering', [ExerciseListController::class, 'index']);
 
+
     $router->get('/exercise/{id:\d+}/answer', [ExerciseAnsweringController::class, 'index']);
     $router->post('/exercise/{id:\d+}/answer', [ExerciseAnsweringController::class, 'answer']);
     $router->get('/exercise/{id:\d+}/{path:\w+}/answer', [ExerciseAnsweringController::class, 'personalAnswer']);
     $router->post('/exercise/{id:\d+}/{path:\w+}/answer', [ExerciseAnsweringController::class, 'editPersonalAnswer']);
-
     $router->get('/exercises/new', [ExerciseCreationController::class, 'index']);
     $router->post('/exercises/new', [ExerciseCreationController::class, 'createExercise']);
 
     $router->get('/exercise/{id:\d+}/edit', [ExerciseEditingController::class, 'index']);
-    $router->post('/exercises/{id:\d+}/edit',[ExerciseEditingController::class, 'createQuestion']);
+    $router->post('/exercise/{id:\d+}/edit', [ExerciseEditingController::class, 'createQuestion']);
+    $router->post('/exercise/{id:\d+}/edit/status/{status:\w+}', [ExerciseEditingController::class, 'changeStatus']);
+
 
     $router->get('/exercises', [ExerciseManagementController::class, 'index']);
 });
