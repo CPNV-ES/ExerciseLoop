@@ -6,20 +6,24 @@ use App\Models\Exercises;
 use App\Models\Questions;
 use App\Models\Types;
 
-class QuestionEditingController
+class QuestionEditingController extends Controller
 {
     public function index($params)
     {
         $exercise = Exercises::find($params['id']);
         $question = Questions::find($params['questionId']);
 
-        $exerciseLabel = 'Exercise';
-        $exerciseTitle = $exercise->title;
+        if (!isset($exercise) || !isset($question)) {
+            header("Location: /404");
+            exit();
+        }
 
-        ob_start();
-        require VIEW_ROOT . "/question-editing.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        return $this->render('question-editing', [
+            'exercise' => $exercise,
+            'question' => $question,
+            'exerciseLabel' => 'Exercise',
+            'exerciseTitle' => $exercise->title,
+        ]);
     }
 
     public function editQuestion($params)

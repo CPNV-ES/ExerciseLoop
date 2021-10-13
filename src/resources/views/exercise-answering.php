@@ -7,7 +7,7 @@
   <p><?= $exerciseTips ?></p>
 
   <form id="form-exercise" action="/exercise/<?= $exercise->id, isset($submission) ? ('/' . $submission->path . '/answer') : '/answer' ?>" accept-charset="UTF-8" method="post">
-    <?php foreach ($questions as $question) : ?>
+    <?php foreach ($exercise->questions() as $question) : ?>
       <div class="field">
         <label for="<?= $question->question ?>"><?= $question->question ?></label>
         <?php if ($question->type()->slug == 'SHORT') : ?>

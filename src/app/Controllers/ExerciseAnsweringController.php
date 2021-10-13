@@ -6,38 +6,34 @@ use App\Models\Answers;
 use App\Models\Exercises;
 use App\Models\Submissions;
 
-class ExerciseAnsweringController
+class ExerciseAnsweringController extends Controller
 {
     /**
      * 
      */
-    public function index($parameters)
+    public function index($params)
     {
-        $exercise = Exercises::find($parameters['id']);
+        $exercise = Exercises::find($params['id']);
 
         if (empty($exercise)) {
             header("Location: /404");
             exit();
         }
 
-        $questions = $exercise->questions();
-
-        $exerciseLabel = 'Exercise: ';
-        $exerciseTitle = $exercise->title;
-        $exerciseTips = "If you'd like to come back later to finish, simply submit it with blanks";
-
-        ob_start();
-        require VIEW_ROOT . "/exercise-answering.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        return $this->render('exercise-answering', [
+            'exerciseLabel' => 'Exercise: ',
+            'exerciseTitle' => $exercise->title,
+            'exerciseTips' => "If you'd like to come back later to finish, simply submit it with blanks",
+            'exercise' => $exercise
+        ]);
     }
 
     /**
      * 
      */
-    public function answer($parameters)
+    public function answer($params)
     {
-        $exercise = Exercises::find($parameters['id']);
+        $exercise = Exercises::find($params['id']);
 
         if (empty($exercise)) {
             header("Location: /404");
@@ -58,7 +54,7 @@ class ExerciseAnsweringController
         } while (!$isUniquePath);
 
         $answerIndex = 0;
-        foreach ($parameters['form'] as $answer) {
+        foreach ($params['form'] as $answer) {
             Answers::create([
                 "answer" => $answer,
                 "question_id" => $questions[$answerIndex]->id,
@@ -69,63 +65,58 @@ class ExerciseAnsweringController
 
         // FastRoute doesn't not implement redirect path yet
         // Redirect to personnel answer editing
-        header("Location: /exercise/" . $parameters['id'] . "/" . $path . "/answer");
+        header("Location: /exercise/" . $params['id'] . "/" . $path . "/answer");
     }
 
     /**
      * 
      */
-    public function personalAnswer($parameters)
+    public function personalAnswer($params)
     {
-        $exercise = Exercises::find($parameters['id']);
+        $exercise = Exercises::find($params['id']);
 
         if (empty($exercise)) {
             header("Location: /404");
             exit();
         }
 
-        $questions = $exercise->questions();
-        $submission = Submissions::where('path', $parameters['path'])->first();
+        $submission = Submissions::where('path', $params['path'])->first();
 
-        $exerciseLabel = 'Exercise: ';
-        $exerciseTitle = $exercise->title;
-        $exerciseTips = "Bookmark this page, it's yours. You'll be able to come back later to finish.";
-
-        ob_start();
-        require VIEW_ROOT . "/exercise-answering.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        return $this->render('exercise-answering', [
+            'exerciseLabel' => 'Exercise: ',
+            'exerciseTitle' => $exercise->title,
+            'exerciseTips' => "Bookmark this page, it's yours. You'll be able to come back later to finish.",
+            'exercise' => $exercise,
+            'submission' => $submission
+        ]);
     }
 
-    public function editPersonalAnswer($parameters)
+    public function editPersonalAnswer($params)
     {
-        $exercise = Exercises::find($parameters['id']);
+        $exercise = Exercises::find($params['id']);
 
         if (empty($exercise)) {
             header("Location: /404");
             exit();
         }
 
-        $questions = $exercise->questions();
-        $submission = Submissions::where('path', $parameters['path'])->first();
-
+        $submission = Submissions::where('path', $params['path'])->first();
         $answers = $submission->answers();
 
         $answerIndex = 0;
-        foreach ($parameters['form'] as $newAnswer) {
+        foreach ($params['form'] as $newAnswer) {
             $answers[$answerIndex]->answer = $newAnswer;
             $answers[$answerIndex]->save();
 
             $answerIndex++;
         }
 
-        $exerciseLabel = 'Exercise: ';
-        $exerciseTitle = $exercise->title;
-        $exerciseTips = "Bookmark this page, it's yours. You'll be able to come back later to finish.";
-
-        ob_start();
-        require VIEW_ROOT . "/exercise-answering.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        return $this->render('exercise-answering', [
+            'exerciseLabel' => 'Exercise: ',
+            'exerciseTitle' => $exercise->title,
+            'exerciseTips' => "Bookmark this page, it's yours. You'll be able to come back later to finish.",
+            'exercise' => $exercise,
+            'submission' => $submission
+        ]);
     }
 }

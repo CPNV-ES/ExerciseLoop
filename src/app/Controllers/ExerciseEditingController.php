@@ -7,30 +7,28 @@ use App\Models\Questions;
 use App\Models\Types;
 use App\Models\States;
 
-class ExerciseEditingController
+class ExerciseEditingController extends Controller
 {
     public function index($params)
     {
         $exercise = Exercises::find($params['id']);
 
-        if (empty($exercise)) {
+        if (!isset($exercise)) {
             header("Location: /404");
             exit();
         }
 
-        $exerciseLabel = 'Exercise:';
-        $exerciseTitle = $exercise->title;
-
-        ob_start();
-        require VIEW_ROOT . "/exercise-editing.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        return $this->render('exercise-editing', [
+            'exerciseLabel' => 'Exercise:',
+            'exerciseTitle' => $exercise->title,
+            'exercise' => $exercise
+        ]);
     }
 
     public function createQuestion($params)
     {
         Questions::create(['question' => $params['form']['field']['label'], 'exercise_id' => $params['id'], 'type_id' => Types::slug($params['form']['field']["value_kind"])]);
-
+        
         $this->renderExerciseEdition($params['id']);
     }
 

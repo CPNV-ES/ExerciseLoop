@@ -5,21 +5,16 @@ namespace App\Controllers;
 use App\Models\Exercises;
 use App\Models\States;
 
-class ExerciseCreationController
+class ExerciseCreationController extends Controller
 {
     public function index()
     {
-        $exerciseLabel = 'New exercise';
-
-        ob_start();
-        require VIEW_ROOT . "/exercise-creation.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        return $this->render('exercise-creation', ['exerciseLabel' => 'New exercise']);
     }
 
-    public function createExercise($parameters)
+    public function createExercise($params)
     {
-        $title =  $parameters['form']['title'];
+        $title =  $params['form']['title'];
 
         if (isset($title) && !is_null($title)){
             $exercise = Exercises::create(['title' => $title, 'state_id' => States::slug('BUILD')]);

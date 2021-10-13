@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class HomeController
 {
-    public function index($parameters)
+    public function index()
     {
         require VIEW_ROOT . "/home.php";
     }

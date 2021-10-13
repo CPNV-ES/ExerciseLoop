@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\Exercises;
 use App\Models\States;
 
-class ExerciseListController
+class ExerciseListController extends Controller
 {
     /**
      * 
@@ -14,9 +14,6 @@ class ExerciseListController
     {
         $exercises = Exercises::where('state_id', States::slug('ANSWER'))->get();
 
-        ob_start();
-        require VIEW_ROOT . "/exercise-list.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        return $this->render('exercise-list', ['exercises' => $exercises]);
     }
 }
