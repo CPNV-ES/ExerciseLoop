@@ -9,9 +9,9 @@ use App\Models\States;
 
 class ExerciseEditingController
 {
-    public function index($parameters)
+    public function index($params)
     {
-        $exercise = Exercises::find($parameters['id']);
+        $exercise = Exercises::find($params['id']);
 
         if (empty($exercise)) {
             header("Location: /404");
@@ -20,7 +20,6 @@ class ExerciseEditingController
 
         $exerciseLabel = 'Exercise:';
         $exerciseTitle = $exercise->title;
-        $questions = $exercise->questions();
 
         ob_start();
         require VIEW_ROOT . "/exercise-editing.php";
@@ -28,21 +27,34 @@ class ExerciseEditingController
         require VIEW_ROOT . "/layout.php";
     }
 
-    public function createQuestion($parameters)
+    public function createQuestion($params)
     {
-        Questions::create(['question' => $parameters['form']['field']['label'], 'exercise_id' => $parameters['id'], 'type_id' => Types::slug($parameters['form']['field']["value_kind"])]);
+        Questions::create(['question' => $params['form']['field']['label'], 'exercise_id' => $params['id'], 'type_id' => Types::slug($params['form']['field']["value_kind"])]);
 
-        header("Location: /exercise/" . $parameters['id'] . "/edit");
+        $this->renderExerciseEdition($params['id']);
+    }
+
+    public function removeQuestion($params)
+    {
+        $question = Questions::find($params['questionId']);
+        $question->delete();
+
+        $this->renderExerciseEdition($params['id']);
+    }
+
+    public function changeStatus($params)
+    {
+        $exercice = Exercises::find($params['id']);
+        $exercice->state_id = States::slug($params['status']);
+        $exercice->save();
+
+        header("Location: /exercises");
         exit();
     }
 
-    public function changeStatus($parameters)
+    private function renderExerciseEdition($id)
     {
-        $exercice = Exercises::find($parameters['id']);
-        $exercice->state_id = States::slug($parameters['status']);
-        $exercice->save();
-        header("Location: /exercises");
+        header("Location: /exercise/$id/edit");
         exit();
-
     }
 }

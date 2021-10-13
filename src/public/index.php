@@ -9,13 +9,13 @@ use App\Controllers\HomeController,
     App\Controllers\ExerciseCreationController,
     App\Controllers\ExerciseEditingController,
     App\Controllers\ExerciseListController,
-    App\Controllers\ExerciseManagementController;
+    App\Controllers\ExerciseManagementController,
+    App\Controllers\QuestionEditingController;
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $router) {
     $router->get('/', [HomeController::class, 'index']);
 
     $router->get('/exercises/answering', [ExerciseListController::class, 'index']);
-
 
     $router->get('/exercise/{id:\d+}/answer', [ExerciseAnsweringController::class, 'index']);
     $router->post('/exercise/{id:\d+}/answer', [ExerciseAnsweringController::class, 'answer']);
@@ -25,9 +25,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
     $router->post('/exercises/new', [ExerciseCreationController::class, 'createExercise']);
 
     $router->get('/exercise/{id:\d+}/edit', [ExerciseEditingController::class, 'index']);
-    $router->post('/exercise/{id:\d+}/edit', [ExerciseEditingController::class, 'createQuestion']);
-    $router->post('/exercise/{id:\d+}/edit/status/{status:\w+}', [ExerciseEditingController::class, 'changeStatus']);
+    $router->post('/exercise/{id:\d+}/edit/add-question', [ExerciseEditingController::class, 'createQuestion']);
+    $router->post('/exercise/{id:\d+}/edit/remove-question/{questionId:\d+}', [ExerciseEditingController::class, 'removeQuestion']);
 
+    $router->get('/exercise/{id:\d+}/edit/edit-question/{questionId:\d+}', [QuestionEditingController::class, 'index']);
+    $router->post('/exercise/{id:\d+}/edit/edit-question/{questionId:\d+}', [QuestionEditingController::class, 'editQuestion']);
+
+    $router->post('/exercise/{id:\d+}/edit/status/{status:\w+}', [ExerciseEditingController::class, 'changeStatus']);
 
     $router->get('/exercises', [ExerciseManagementController::class, 'index']);
 });

@@ -8,37 +8,40 @@
             <h1>Fields</h1>
             <table class="records">
                 <thead>
-                <tr>
-                    <th>Label</th>
-                    <th>Value kind</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th>Label</th>
+                        <th>Value kind</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($questions as $question) : ?>
-                    <tr>
-                        <td><?= $question->question ?></td>
-                        <td><?= $question->type()->name ?></td>
-                    </tr>
-                <?php endforeach ?>
+                    <?php foreach (array_reverse($exercise->questions()) as $question) : ?>
+                        <tr>
+                            <td><?= $question->question ?></td>
+                            <td><?= $question->type()->name ?></td>
+                            <td id="icons-actions">
+                                <a href="/exercise/<?= $exercise->id ?>/edit/edit-question/<?= $question->id ?>">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <form action="/exercise/<?= $exercise->id ?>/edit/remove-question/<?= $question->id ?>" accept-charset="UTF-8" method="post">
+                                    <button type="submit" data-confirm="Are you sure?"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
                 </tbody>
             </table>
-
-            <form action="/exercise/<?=$exercise->id?>/edit/status/answer" method="post">
-            <input type="submit" value="Complete and be ready for answers" onclick="return confirm('Are you sure?You wont be able to further edit this exercise');" />
+            <form action="/exercise/<?= $exercise->id ?>/edit/status/answer" method="post">
+                <input type="submit" value="Complete and be ready for answers" onclick="return confirm('Are you sure?You wont be able to further edit this exercise');" />
             </form>
-
-
         </div>
+
         <div class="column">
             <h1>New Field</h1>
-            <form action="/exercise/<?= $exercise->id ?>/edit" accept-charset="UTF-8" method="post">
-                <input name="utf8" type="hidden" value="&#x2713;"/><input type="hidden" name="authenticity_token"
-                        value="G7bvuUztEHLMtcqm1ZR9Nyy6JRBbSSmj3s7CPWzhzOe7bbY2/KJhd8R8bPiBbADIUy12w7jwd7mBjiawrnu/jg=="/>
-
+            <form action="/exercise/<?= $exercise->id ?>/edit/add-question" accept-charset="UTF-8" method="post">
                 <div class="field">
                     <label for="field_label">Label</label>
-                    <input type="text" name="field[label]" id="field_label"/>
+                    <input type="text" name="field[label]" id="field_label" />
                 </div>
 
                 <div class="field">
@@ -51,7 +54,7 @@
                 </div>
 
                 <div class="actions">
-                    <input type="submit" name="commit" value="Create Field" data-disable-with="Create Field"/>
+                    <input type="submit" name="commit" value="Create Field" data-disable-with="Create Field" />
                 </div>
             </form>
         </div>

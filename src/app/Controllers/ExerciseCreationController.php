@@ -19,9 +19,12 @@ class ExerciseCreationController
 
     public function createExercise($parameters)
     {
-        $exercise = Exercises::create(['title' => $parameters['form']['title'], 'state_id' => States::slug('BUILD')]);
+        $title =  $parameters['form']['title'];
 
-        header("Location: /exercise/". $exercise->id . "/edit");
-        exit();
+        if (isset($title) && !is_null($title)){
+            $exercise = Exercises::create(['title' => $title, 'state_id' => States::slug('BUILD')]);
+            header("Location: /exercise/". $exercise->id . "/edit");
+            exit();
+        }
     }
 }
