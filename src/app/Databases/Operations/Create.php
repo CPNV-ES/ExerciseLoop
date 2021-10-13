@@ -19,24 +19,22 @@ class Create extends Query
 
     /**
      * Build the query
+     * @return void
      */
-    private function build()
+    private function build(): void
     {
-        $query = 'INSERT INTO ' . $this->table . ' VALUES (null,';
-        foreach ($this->params as $key => $_) {
-            $query .= ':' . $key . ($key !== array_key_last($this->params) ? ',' : null);
-        }
-        $query .= ');';
-
-        $this->query = $query;
+        $paramsKeys = array_keys($this->params);
+        array_unshift($paramsKeys, 'null');
+        $this->query = 'INSERT INTO ' . $this->table . ' VALUES (' . implode(',:', $paramsKeys) . ');';
     }
 
     /**
      * Execute the query and return the id of inserted row
+     * @return int
      */
     public function execute(): int
     {
-        $pdo = Connector::connect();
+        $pdo = Connector::getInstance()->pdo();
         $pdo->prepare($this->query)->execute($this->params);
 
         return $pdo->lastInsertId();
