@@ -13,7 +13,7 @@ class ExerciseEditingController extends Controller
     {
         $exercise = Exercises::find($params['id']);
 
-        if (!isset($exercise)) {
+        if (!isset($exercise) || $exercise->state_id != States::slug('BUILD')) {
             header("Location: /404");
             exit();
         }
@@ -28,7 +28,7 @@ class ExerciseEditingController extends Controller
     public function createQuestion($params)
     {
         Questions::create(['question' => $params['form']['field']['label'], 'exercise_id' => $params['id'], 'type_id' => Types::slug($params['form']['field']["value_kind"])]);
-        
+
         $this->renderExerciseEdition($params['id']);
     }
 

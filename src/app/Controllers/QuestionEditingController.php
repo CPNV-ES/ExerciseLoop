@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Exercises;
 use App\Models\Questions;
 use App\Models\Types;
+use App\Models\States;
 
 class QuestionEditingController extends Controller
 {
@@ -13,7 +14,7 @@ class QuestionEditingController extends Controller
         $exercise = Exercises::find($params['id']);
         $question = Questions::find($params['questionId']);
 
-        if (!isset($exercise) || !isset($question)) {
+        if (!isset($exercise) || $exercise->state_id != States::slug('BUILD') || !isset($question)) {
             header("Location: /404");
             exit();
         }
