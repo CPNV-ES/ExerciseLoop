@@ -7,17 +7,18 @@
     
     <title>ExerciseLooper</title>
 
-    <link rel="stylesheet" href="/node_modules/normalize.css/normalize.css">
-    <link rel="stylesheet" href="/node_modules/milligram/dist/milligram.min.css">
-    <link rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="/public/css/colors.css">
-    <link rel="stylesheet" href="/public/css/layout.css">
+    <link rel="stylesheet" href="/css/normalize.css/normalize.css">
+    <link rel="stylesheet" href="/css/milligram/milligram.min.css">
+    <link rel="stylesheet" href="/css/colors.css">
+    <link rel="stylesheet" href="/css/layout.css">
+
+    <script src="https://kit.fontawesome.com/c2499f296f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <header class="heading">
         <section class="container">
-            <a href="/"><img src="/public/images/logo.png" /></a>
+            <a href="/"><img src="/images/logo.png" /></a>
             <?= isset($exerciseLabel) ? '<span class="exercise-label">' . $exerciseLabel . '</span>' : null ?>
             <?= isset($exerciseTitle) ? '<span class="exercise-title">' . $exerciseTitle . '</span>' : null ?>
         </section>

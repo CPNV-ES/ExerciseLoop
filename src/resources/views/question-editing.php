@@ -1,6 +1,4 @@
-<head>
-    <link rel="stylesheet" href="/public/css/question-editing.css">
-</head>
+<link rel="stylesheet" href="/css/question-editing.css">
 
 <section class="container">
     <h1>Editing Field</h1>

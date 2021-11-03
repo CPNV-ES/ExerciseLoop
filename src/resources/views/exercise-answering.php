@@ -1,6 +1,4 @@
-<head>
-  <link rel="stylesheet" href="/public/css/exercise-answering.css">
-</head>
+<link rel="stylesheet" href="/css/exercise-answering.css">
 
 <div class="container">
   <h1>Your take</h1>

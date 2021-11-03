@@ -7,9 +7,9 @@
 
     <title>ExerciseLooper - 404</title>
 
-    <link rel="stylesheet" href="/node_modules/normalize.css/normalize.css">
-    <link rel="stylesheet" href="/node_modules/milligram/dist/milligram.min.css">
-    <link rel="stylesheet" href="/public/css/errors/404.css">
+    <link rel="stylesheet" href="/css/normalize.css/normalize.css">
+    <link rel="stylesheet" href="/css/milligram/milligram.min.css">
+    <link rel="stylesheet" href="/css/errors/404.css">
 </head>
 
 <body>

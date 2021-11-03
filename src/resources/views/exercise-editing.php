@@ -1,6 +1,4 @@
-<head>
-    <link rel="stylesheet" href="/public/css/exercise-editing.css">
-</head>
+<link rel="stylesheet" href="/css/exercise-editing.css">
 
 <section class="container">
     <div class="row">

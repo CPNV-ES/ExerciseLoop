@@ -1,7 +1,7 @@
 <?php
 
-require './vendor/autoload.php';
-require './config/config.php';
+require '../vendor/autoload.php';
+require '../config/config.php';
 
 // Controllers
 use App\Controllers\HomeController,
