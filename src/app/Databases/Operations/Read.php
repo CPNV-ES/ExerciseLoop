@@ -21,10 +21,8 @@ class Read extends Query
      */
     public function __construct(string $class, array $columns)
     {
-        $this->columns = $columns;
-
         parent::__construct($class);
-        return $this;
+        $this->columns = $columns;
     }
 
     /**
@@ -62,6 +60,7 @@ class Read extends Query
      */
     public function get(): array | Model | null
     {
+        // Build the query
         $this->query = 'SELECT ' . implode(', ', $this->columns) . ' FROM ' . $this->table;
 
         if (isset($this->whereConditions) && !empty($this->whereConditions)) {
@@ -73,19 +72,11 @@ class Read extends Query
             $this->query .= ' ORDER BY ' . implode(', ', $this->orderBy) . ' ' . $this->orderDirection;
         }
 
-        return $this->execute();
-    }
-
-    /**
-     * @return Model[]|Model|null
-     */
-    private function execute(): array | Model | null
-    {
+        // Perform the query to the databases
         $stmt = Connector::getInstance()->pdo()->prepare($this->query);
         $stmt->execute($this->params);
         $stmt->setFetchMode(\PDO::FETCH_CLASS, $this->class);
         $result = $stmt->fetchAll();
-
         return $this->returnAsDirectObject ? (empty($result) ? null : reset($result)) : $result;
     }
 }

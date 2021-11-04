@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use PDOException;
 use App\Models\Answers;
 use App\Models\Exercises;
 use App\Models\Submissions;
@@ -16,7 +17,7 @@ class ExerciseAnsweringController extends Controller
         $exercise = Exercises::find($params['id']);
 
         if (empty($exercise)) {
-            header("Location: /404");
+            (new ErrorController)->index(Error::NOT_FOUND);
             exit();
         }
 
@@ -36,7 +37,7 @@ class ExerciseAnsweringController extends Controller
         $exercise = Exercises::find($params['id']);
 
         if (empty($exercise)) {
-            header("Location: /404");
+            (new ErrorController)->index(Error::NOT_FOUND);
             exit();
         }
 
@@ -45,10 +46,10 @@ class ExerciseAnsweringController extends Controller
         do {
             $isUniquePath = true;
             $path = uniqid(rand());
-            
+
             try {
                 $submission = Submissions::create(['path' => $path, 'timestamp' => date('Y-m-d H:i:s')]);
-            } catch (\PDOException $e) {
+            } catch (PDOException $e) {
                 $isUniquePath = false;
             }
         } while (!$isUniquePath);
@@ -76,7 +77,7 @@ class ExerciseAnsweringController extends Controller
         $exercise = Exercises::find($params['id']);
 
         if (empty($exercise)) {
-            header("Location: /404");
+            (new ErrorController)->index(Error::NOT_FOUND);
             exit();
         }
 
@@ -96,7 +97,7 @@ class ExerciseAnsweringController extends Controller
         $exercise = Exercises::find($params['id']);
 
         if (empty($exercise)) {
-            header("Location: /404");
+            (new ErrorController)->index(Error::NOT_FOUND);
             exit();
         }
 

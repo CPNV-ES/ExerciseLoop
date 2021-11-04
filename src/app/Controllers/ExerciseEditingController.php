@@ -14,7 +14,7 @@ class ExerciseEditingController extends Controller
         $exercise = Exercises::find($params['id']);
 
         if (!isset($exercise) || $exercise->state_id != States::slug('BUILD')) {
-            header("Location: /404");
+            (new ErrorController)->index(Error::NOT_FOUND);
             exit();
         }
 

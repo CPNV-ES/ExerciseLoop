@@ -15,7 +15,7 @@ class QuestionEditingController extends Controller
         $question = Questions::find($params['questionId']);
 
         if (!isset($exercise) || $exercise->state_id != States::slug('BUILD') || !isset($question)) {
-            header("Location: /404");
+            (new ErrorController)->index(Error::NOT_FOUND);
             exit();
         }
 

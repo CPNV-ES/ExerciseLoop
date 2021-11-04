@@ -12,6 +12,9 @@ use App\Controllers\HomeController,
     App\Controllers\ExerciseManagementController,
     App\Controllers\QuestionEditingController;
 
+use App\Controllers\Error,
+    App\Controllers\ErrorController;
+
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $router) {
     $router->get('/', [HomeController::class, 'index']);
 
@@ -51,11 +54,11 @@ $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:                   // ... 404 Not Found
-        require VIEW_ROOT . "/errors/404.php";
+        (new ErrorController)->index(Error::NOT_FOUND);
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:          // ... 405 Method Not Allowed
         $allowedMethods = $routeInfo[1];
-        echo '405 Method Not Allowed';
+        (new ErrorController)->index(Error::METHOD_NOT_ALLOWED);
         break;
     case FastRoute\Dispatcher::FOUND:
         $controllerClass = $routeInfo[1][0];
@@ -66,6 +69,11 @@ switch ($routeInfo[0]) {
             $parameters['form'] = $_POST;
         }
 
-        (new $controllerClass)->$action($parameters);
+        try {
+            (new $controllerClass)->$action($parameters);
+        } catch (PDOException $e) {
+            (new ErrorController)->index(Error::DATABASE_ERROR);
+        }
+
         break;
 }
