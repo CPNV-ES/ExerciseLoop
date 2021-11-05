@@ -27,7 +27,7 @@
                             </a>
                             <form action="/exercise/<?= $building->id ?>/destroy" accept-charset="UTF-8"
                                   method="post">
-                                <button type="submit" data-confirm="Are you sure?"><i class="fa fa-trash"></i>
+                                <button type="submit" onclick="return confirm('Are you sure?');"><i class="fa fa-trash"></i>
                                 </button>
                             </form>
                         </td>
@@ -77,7 +77,7 @@
                         <td>
                             <a title="Show results" href=""><i class="fa fa-chart-bar"></i></a>
                             <form action="/exercise/<?= $closed->id ?>/destroy" accept-charset="UTF-8" method="post">
-                                <button type="submit" data-confirm="Are you sure?"><i class="fa fa-trash"></i></button>
+                                <button type="submit" onclick="return confirm('Are you sure?');"><i class="fa fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>
