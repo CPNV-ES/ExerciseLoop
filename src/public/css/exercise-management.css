@@ -32,7 +32,7 @@ button {
   -webkit-appearance: none;
 }
 
-button:hover, button:active {
+button:hover, button:active, button:focus {
   background: none;
   color: var(--purple);
 }

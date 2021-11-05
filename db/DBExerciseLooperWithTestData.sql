@@ -143,7 +143,7 @@ INSERT INTO types(NAME,slug)
 VALUES ("Single line text","SHORT"),("List of single lines","MEDIUM"),("Multi-line text","LONG");
 
 INSERT INTO exercises(title, state_id)
-VALUES ("Exercise 1",1),("Exercise 2",1),("Exercise 3",2),("Exercise 4",2), ("Exercise 5",3);
+VALUES ("Exercise 1",1),("Exercise 2",2),("Exercise 3",2),("Exercise 4",1), ("Exercise 5",3);
 
 INSERT INTO questions(question,exercise_id,type_id)
 VALUES ("Question 1",1,1),("Question 2",1,2),("Question 1",2,3),("Question 1",3,3),("Question 2",3,2),("Question 1",5,3);
