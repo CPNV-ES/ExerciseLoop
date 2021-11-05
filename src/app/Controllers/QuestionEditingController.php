@@ -19,6 +19,9 @@ class QuestionEditingController extends Controller
             exit();
         }
 
+        // Generate CSRF Token
+        $_SESSION["token"] = bin2hex(random_bytes(32));
+
         return $this->render('question-editing', [
             'exercise' => $exercise,
             'question' => $question,
@@ -29,8 +32,8 @@ class QuestionEditingController extends Controller
 
     public function editQuestion($params)
     {
-        $questionLabel = $params['form']['field']['label'];
-        $questionType = $params['form']['field']['value_kind'];
+        $questionLabel = $params['post']['field']['label'];
+        $questionType = $params['post']['field']['value_kind'];
 
         $question = Questions::find($params['questionId']);
         $question->question = $questionLabel;

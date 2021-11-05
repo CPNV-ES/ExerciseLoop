@@ -9,16 +9,19 @@ class ExerciseCreationController extends Controller
 {
     public function index()
     {
+        // Generate CSRF Token
+        $_SESSION["token"] = bin2hex(random_bytes(32));
+
         return $this->render('exercise-creation', ['exerciseLabel' => 'New exercise']);
     }
 
     public function createExercise($params)
     {
-        $title =  $params['form']['title'];
+        $title =  $params['post']['title'];
 
-        if (isset($title) && !is_null($title)){
+        if (isset($title) && !is_null($title)) {
             $exercise = Exercises::create(['title' => $title, 'state_id' => States::slug('BUILD')]);
-            header("Location: /exercise/". $exercise->id . "/edit");
+            header("Location: /exercise/" . $exercise->id . "/edit");
             exit();
         }
     }

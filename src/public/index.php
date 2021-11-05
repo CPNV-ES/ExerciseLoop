@@ -64,14 +64,15 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $controllerClass = $routeInfo[1][0];
         $action = $routeInfo[1][1];
-        $parameters = $routeInfo[2];
+        $params = $routeInfo[2];
 
         if ($httpMethod == 'POST') {
-            $parameters['form'] = $_POST;
+            $params['post'] = $_POST;
         }
 
         try {
-            (new $controllerClass)->$action($parameters);
+            session_start();
+            (new $controllerClass)->$action($params);
         } catch (PDOException $e) {
             (new ErrorController)->index(Error::DATABASE_ERROR);
         }

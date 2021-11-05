@@ -4,7 +4,9 @@
 <section class="container">
   <h1>New Exercise</h1>
 
-  <form id="form-exercise" action="/exercises/new" accept-charset="UTF-8" method="post">
+  <form id="form-exercise" action="/exercises/new" method="post">
+    <!-- CSRF Token -->
+    <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
 
     <div class="field">
       <label for="title">Title</label>

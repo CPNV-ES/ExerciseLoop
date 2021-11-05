@@ -21,7 +21,10 @@
                                 <a href="/exercise/<?= $exercise->id ?>/edit/edit-question/<?= $question->id ?>">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <form action="/exercise/<?= $exercise->id ?>/edit/remove-question/<?= $question->id ?>" accept-charset="UTF-8" method="post">
+                                <form action="/exercise/<?= $exercise->id ?>/edit/remove-question/<?= $question->id ?>" method="post">
+                                    <!-- CSRF Token -->
+                                    <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
+
                                     <button type="submit" data-confirm="Are you sure?"><i class="fa fa-trash"></i></button>
                                 </form>
                             </td>
@@ -30,13 +33,19 @@
                 </tbody>
             </table>
             <form action="/exercise/<?= $exercise->id ?>/edit/status/answer" method="post">
+                <!-- CSRF Token -->
+                <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
+
                 <input type="submit" value="Complete and be ready for answers" onclick="return confirm('Are you sure?You wont be able to further edit this exercise');" />
             </form>
         </div>
 
         <div class="column">
             <h1>New Field</h1>
-            <form action="/exercise/<?= $exercise->id ?>/edit/add-question" accept-charset="UTF-8" method="post">
+            <form action="/exercise/<?= $exercise->id ?>/edit/add-question" method="post">
+                <!-- CSRF Token -->
+                <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
+
                 <div class="field">
                     <label for="field_label">Label</label>
                     <input type="text" name="field[label]" id="field_label" />

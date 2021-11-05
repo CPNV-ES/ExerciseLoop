@@ -6,20 +6,17 @@ use PDOException;
 use App\Models\Answers;
 use App\Models\Exercises;
 use App\Models\Submissions;
+use App\Models\States;
 
 class ExerciseAnsweringController extends Controller
 {
-    /**
-     * 
-     */
     public function index($params)
     {
         $exercise = Exercises::find($params['id']);
+        $this->checkExerciseValidity($exercise);
 
-        if (empty($exercise)) {
-            (new ErrorController)->index(Error::NOT_FOUND);
-            exit();
-        }
+        // Generate CSRF Token
+        $_SESSION["token"] = bin2hex(random_bytes(32));
 
         return $this->render('exercise-answering', [
             'exerciseLabel' => 'Exercise: ',
@@ -29,19 +26,15 @@ class ExerciseAnsweringController extends Controller
         ]);
     }
 
-    /**
-     * 
-     */
     public function answer($params)
     {
-        $exercise = Exercises::find($params['id']);
-
-        if (empty($exercise)) {
-            (new ErrorController)->index(Error::NOT_FOUND);
+        if (!isset($params['post']['token']) || !isset($_SESSION['token']) || $params['post']['token'] != $_SESSION['token']) {
+            echo 'here';
             exit();
         }
 
-        $questions = $exercise->questions();
+        $exercise = Exercises::find($params['id']);
+        $this->checkExerciseValidity($exercise);
 
         do {
             $isUniquePath = true;
@@ -54,14 +47,12 @@ class ExerciseAnsweringController extends Controller
             }
         } while (!$isUniquePath);
 
-        $answerIndex = 0;
-        foreach ($params['form'] as $answer) {
+        foreach ($params['post']['answers'] as $key => $answer) {
             Answers::create([
                 "answer" => $answer,
-                "question_id" => $questions[$answerIndex]->id,
+                "question_id" => $key,
                 "submission_id" => $submission->id
             ]);
-            $answerIndex++;
         }
 
         // FastRoute doesn't not implement redirect path yet
@@ -69,19 +60,15 @@ class ExerciseAnsweringController extends Controller
         header("Location: /exercise/" . $params['id'] . "/" . $path . "/answer");
     }
 
-    /**
-     * 
-     */
     public function personalAnswer($params)
     {
         $exercise = Exercises::find($params['id']);
-
-        if (empty($exercise)) {
-            (new ErrorController)->index(Error::NOT_FOUND);
-            exit();
-        }
+        $this->checkExerciseValidity($exercise);
 
         $submission = Submissions::where('path', $params['path'])->first();
+
+        // Generate CSRF Token
+        $_SESSION["token"] = bin2hex(random_bytes(32));
 
         return $this->render('exercise-answering', [
             'exerciseLabel' => 'Exercise: ',
@@ -95,23 +82,19 @@ class ExerciseAnsweringController extends Controller
     public function editPersonalAnswer($params)
     {
         $exercise = Exercises::find($params['id']);
-
-        if (empty($exercise)) {
-            (new ErrorController)->index(Error::NOT_FOUND);
-            exit();
-        }
+        $this->checkExerciseValidity($exercise);
 
         $submission = Submissions::where('path', $params['path'])->first();
-        $answers = $submission->answers();
 
-        $answerIndex = 0;
-        foreach ($params['form'] as $newAnswer) {
-            $answers[$answerIndex]->answer = $newAnswer;
-            $answers[$answerIndex]->save();
-
-            $answerIndex++;
+        foreach ($params['post']['answers'] as $key => $newAnswer) {
+            $answer = $submission->answer($key);
+            $answer->answer = $newAnswer;
+            $answer->save();
         }
 
+        // Generate CSRF Token
+        $_SESSION["token"] = bin2hex(random_bytes(32));
+        
         return $this->render('exercise-answering', [
             'exerciseLabel' => 'Exercise: ',
             'exerciseTitle' => $exercise->title,
@@ -119,5 +102,13 @@ class ExerciseAnsweringController extends Controller
             'exercise' => $exercise,
             'submission' => $submission
         ]);
+    }
+
+    private function checkExerciseValidity($exercise)
+    {
+        if (empty($exercise) || $exercise->state_id != States::slug('ANSWER')) {
+            (new ErrorController)->index(Error::NOT_FOUND);
+            exit();
+        }
     }
 }

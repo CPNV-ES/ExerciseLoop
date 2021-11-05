@@ -18,6 +18,9 @@ class ExerciseEditingController extends Controller
             exit();
         }
 
+        // Generate CSRF Token
+        $_SESSION["token"] = bin2hex(random_bytes(32));
+
         return $this->render('exercise-editing', [
             'exerciseLabel' => 'Exercise:',
             'exerciseTitle' => $exercise->title,
@@ -27,7 +30,7 @@ class ExerciseEditingController extends Controller
 
     public function createQuestion($params)
     {
-        Questions::create(['question' => $params['form']['field']['label'], 'exercise_id' => $params['id'], 'type_id' => Types::slug($params['form']['field']["value_kind"])]);
+        Questions::create(['question' => $params['post']['field']['label'], 'exercise_id' => $params['id'], 'type_id' => Types::slug($params['post']['field']["value_kind"])]);
 
         $this->renderExerciseEdition($params['id']);
     }

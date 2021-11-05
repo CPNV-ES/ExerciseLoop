@@ -19,9 +19,9 @@ class Submissions extends Model
         return Answers::where('submission_id', $this->id)->get();
     }
 
-    public function answer(Questions $question)
+    public function answer(int $questionId)
     {
-        return Answers::where('question_id', $question->id)
+        return Answers::where('question_id', $questionId)
         ->where('submission_id', $this->id)
         ->first();
     }
