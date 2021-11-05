@@ -34,6 +34,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
     $router->get('/exercise/{id:\d+}/edit/edit-question/{questionId:\d+}', [QuestionEditingController::class, 'index']);
     $router->post('/exercise/{id:\d+}/edit/edit-question/{questionId:\d+}', [QuestionEditingController::class, 'editQuestion']);
 
+    $router->post('/exercise/{id:\d+}/destroy', [ExerciseManagementController::class, 'removeExercise']);
     $router->post('/exercise/{id:\d+}/edit/status/{status:\w+}', [ExerciseEditingController::class, 'changeStatus']);
 
     $router->get('/exercises', [ExerciseManagementController::class, 'index']);

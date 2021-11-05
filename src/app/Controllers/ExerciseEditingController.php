@@ -42,9 +42,12 @@ class ExerciseEditingController extends Controller
 
     public function changeStatus($params)
     {
-        $exercice = Exercises::find($params['id']);
-        $exercice->state_id = States::slug($params['status']);
-        $exercice->save();
+        $exercise = Exercises::find($params['id']);
+        if ($exercise->questions() == []) {
+            $this->renderExerciseEdition($params['id']);
+        }
+        $exercise->state_id = States::slug($params['status']);
+        $exercise->save();
 
         header("Location: /exercises");
         exit();
