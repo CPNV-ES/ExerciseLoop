@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>ExerciseLooper - 500</title>
+    <title>ExerciseLooper - <?= $code ?></title>
 
     <link rel="stylesheet" href="/css/normalize.css/normalize.css">
     <link rel="stylesheet" href="/css/milligram/milligram.min.css">
