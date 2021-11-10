@@ -3,6 +3,9 @@
 use PHPUnit\Framework\TestCase;
 use App\Models\Questions;
 
+require './vendor/autoload.php';
+require './config/config.php';
+
 class QuestionsTest extends TestCase
 {
     protected function setUp(): void

@@ -3,13 +3,16 @@
 use PHPUnit\Framework\TestCase;
 use App\Models\Answers;
 
+require './vendor/autoload.php';
+require './config/config.php';
+
 class AnswersTest extends TestCase
 {
     protected function setUp(): void
     {
         // TODO DROP DB
     }
-    
+
     public function testAll()
     {
         $this->assertEquals(6, count(Answers::all()));

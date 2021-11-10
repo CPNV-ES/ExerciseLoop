@@ -3,6 +3,9 @@
 use PHPUnit\Framework\TestCase;
 use App\Models\Submissions;
 
+require './vendor/autoload.php';
+require './config/config.php';
+
 class SubmissionsTest extends TestCase
 {
     public function testAll()
