@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Helene DUBUIS, Armand MARECHAL">
+  <meta name="description" content="Home of ExerciseLooper">
+  <meta name="keywords" content="Home, Exercises">
 
   <title>ExerciseLooper</title>
 
@@ -16,7 +19,7 @@
 <body>
   <header class="dashboard">
     <div class="container">
-      <img src="/images/logo.png" />
+      <img src="/images/logo.png" alt="Logo of the website" width="84" height="84" />
       <h1>Exercise<br>Looper</h1>
     </div>
   </header>

@@ -19,6 +19,10 @@ class ExerciseManagementController extends Controller
         return $this->render('exercise-management', [
             'exercisesBuild' => $exercisesBuild,
             'exercisesAnswer' => $exercisesAnswer, 'exercisesClose' => $exercisesClose
+        ], 
+        [
+            'description' => 'List of all exercises and their states',
+            'keywords' => 'Exercise, Exercise Management, Exercise List'
         ]);
     }
 

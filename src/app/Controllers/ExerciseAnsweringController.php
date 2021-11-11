@@ -23,6 +23,10 @@ class ExerciseAnsweringController extends Controller
             'exerciseTitle' => $exercise->title,
             'exerciseTips' => "If you'd like to come back later to finish, simply submit it with blanks",
             'exercise' => $exercise
+        ],
+        [
+            'description' => 'Exercise response form',
+            'keywords' => 'Exercise, Answer, Response, Form'
         ]);
     }
 
@@ -76,6 +80,10 @@ class ExerciseAnsweringController extends Controller
             'exerciseTips' => "Bookmark this page, it's yours. You'll be able to come back later to finish.",
             'exercise' => $exercise,
             'submission' => $submission
+        ],
+        [
+            'description' => 'Exercise response form',
+            'keywords' => 'Exercise, Answer, Response, Form'
         ]);
     }
 
@@ -101,6 +109,10 @@ class ExerciseAnsweringController extends Controller
             'exerciseTips' => "Bookmark this page, it's yours. You'll be able to come back later to finish.",
             'exercise' => $exercise,
             'submission' => $submission
+        ],
+        [
+            'description' => 'Exercise response form',
+            'keywords' => 'Exercise, Answer, Response, Form'
         ]);
     }
 

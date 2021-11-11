@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="/css/exercise-creation.css">
 
-
 <section class="container">
   <h1>New Exercise</h1>
 

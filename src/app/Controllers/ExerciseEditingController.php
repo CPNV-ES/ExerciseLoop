@@ -25,6 +25,10 @@ class ExerciseEditingController extends Controller
             'exerciseLabel' => 'Exercise:',
             'exerciseTitle' => $exercise->title,
             'exercise' => $exercise
+        ], 
+        [
+            'description' => 'Exercise edit form',
+            'keywords' => 'Exercise, Edition, Form'
         ]);
     }
 
@@ -32,7 +36,7 @@ class ExerciseEditingController extends Controller
     {
         Questions::create(['question' => $params['post']['field']['label'], 'exercise_id' => $params['id'], 'type_id' => Types::slug($params['post']['field']["value_kind"])]);
 
-        $this->renderExerciseEdition($params['id']);
+        $this->redirectToExerciseEdition($params['id']);
     }
 
     public function removeQuestion($params)
@@ -40,14 +44,14 @@ class ExerciseEditingController extends Controller
         $question = Questions::find($params['questionId']);
         $question->delete();
 
-        $this->renderExerciseEdition($params['id']);
+        $this->redirectToExerciseEdition($params['id']);
     }
 
     public function changeStatus($params)
     {
         $exercise = Exercises::find($params['id']);
         if ($exercise->questions() == []) {
-            $this->renderExerciseEdition($params['id']);
+            $this->redirectToExerciseEdition($params['id']);
         }
         $exercise->state_id = States::slug($params['status']);
         $exercise->save();
@@ -56,7 +60,7 @@ class ExerciseEditingController extends Controller
         exit();
     }
 
-    private function renderExerciseEdition($id)
+    private function redirectToExerciseEdition($id)
     {
         header("Location: /exercise/$id/edit");
         exit();

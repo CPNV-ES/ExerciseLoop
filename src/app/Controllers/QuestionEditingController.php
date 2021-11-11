@@ -27,6 +27,10 @@ class QuestionEditingController extends Controller
             'question' => $question,
             'exerciseLabel' => 'Exercise',
             'exerciseTitle' => $exercise->title,
+        ], 
+        [
+            'description' => 'Question edit form',
+            'keywords' => 'Question, Edition, Form'
         ]);
     }
 

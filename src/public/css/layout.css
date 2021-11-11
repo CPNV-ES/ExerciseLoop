@@ -5,6 +5,7 @@ header section {
 
 header img {
   height: 100%;
+  width: auto;
 }
 
 header .exercise-label,
