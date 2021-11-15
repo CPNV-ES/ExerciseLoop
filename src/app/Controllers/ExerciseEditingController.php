@@ -18,9 +18,6 @@ class ExerciseEditingController extends Controller
             exit();
         }
 
-        // Generate CSRF Token
-        $_SESSION["token"] = bin2hex(random_bytes(32));
-
         return $this->render('exercise-editing', [
             'exerciseLabel' => 'Exercise:',
             'exerciseTitle' => $exercise->title,

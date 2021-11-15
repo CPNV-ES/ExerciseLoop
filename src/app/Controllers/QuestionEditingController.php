@@ -19,9 +19,6 @@ class QuestionEditingController extends Controller
             exit();
         }
 
-        // Generate CSRF Token
-        $_SESSION["token"] = bin2hex(random_bytes(32));
-
         return $this->render('question-editing', [
             'exercise' => $exercise,
             'question' => $question,

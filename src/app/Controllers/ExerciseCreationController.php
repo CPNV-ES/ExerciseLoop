@@ -9,9 +9,6 @@ class ExerciseCreationController extends Controller
 {
     public function index()
     {
-        // Generate CSRF Token
-        $_SESSION["token"] = bin2hex(random_bytes(32));
-
         return $this->render('exercise-creation', ['exerciseLabel' => 'New exercise'], [
             'description' => 'Exercise creation form',
             'keywords' => 'Exercise, Creation, Build, Form'

@@ -4,9 +4,7 @@
   <h1>New Exercise</h1>
 
   <form id="form-exercise" action="/exercises/new" method="post">
-    <!-- CSRF Token -->
-    <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
-
+    <?= $this->csrf() ?>
     <div class="field">
       <label for="title">Title</label>
       <input type="text" name="title" id="title" />

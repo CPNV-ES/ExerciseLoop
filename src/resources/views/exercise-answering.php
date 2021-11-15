@@ -5,9 +5,7 @@
   <p><?= $exerciseTips ?></p>
 
   <form id="form-exercise" action="/exercise/<?= $exercise->id, isset($submission) ? ('/' . $submission->path . '/answer') : '/answer' ?>" method="post">
-    <!-- CSRF Token -->
-    <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
-
+    <?= $this->csrf() ?>
     <?php foreach ($exercise->questions() as $question) : ?>
       <div class="field">
         <label for="<?= $question->question ?>"><?= $question->question ?></label>

@@ -4,9 +4,7 @@
     <h1>Editing Field</h1>
 
     <form action="/exercise/<?= $exercise->id ?>/edit/edit-question/<?= $question->id ?>" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
-        <!-- CSRF Token -->
-        <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
-
+        <?= $this->csrf() ?>
         <div class="field">
             <label for="field_label">Label</label>
             <input type="text" value="<?= $question->question ?>" name="field[label]" id="field_label" />

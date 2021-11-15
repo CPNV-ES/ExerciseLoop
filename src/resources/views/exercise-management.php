@@ -19,9 +19,7 @@
                             <td>
                                 <?php if ($building->questions() != []) : ?>
                                     <form action="/exercise/<?= $building->id ?>/edit/status/answer" method="post">
-                                        <!-- CSRF Token -->
-                                        <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
-
+                                        <?= $this->csrf() ?>
                                         <button type="submit"><i class="fa fa-comment"></i></button>
                                     </form>
                                 <?php endif; ?>
@@ -29,9 +27,7 @@
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <form action="/exercise/<?= $building->id ?>/destroy" method="post">
-                                    <!-- CSRF Token -->
-                                    <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
-
+                                    <?= $this->csrf() ?>
                                     <button type="submit" onclick="return confirm('Are you sure?');"><i class="fa fa-trash"></i>
                                     </button>
                                 </form>
@@ -58,9 +54,7 @@
                             <td>
                                 <a title="Show results" href=""><i class="fa fa-chart-bar"></i></a>
                                 <form action="/exercise/<?= $anserwing->id ?>/edit/status/close" method="post">
-                                    <!-- CSRF Token -->
-                                    <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
-
+                                    <?= $this->csrf() ?>
                                     <button type="submit"><i class="fa fa-minus-circle"></i></button>
                                 </form>
                             </td>
@@ -85,9 +79,7 @@
                             <td>
                                 <a title="Show results" href=""><i class="fa fa-chart-bar"></i></a>
                                 <form action="/exercise/<?= $closed->id ?>/destroy" method="post">
-                                    <!-- CSRF Token -->
-                                    <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>" />
-
+                                    <?= $this->csrf() ?>
                                     <button type="submit" onclick="return confirm('Are you sure?');"><i class="fa fa-trash"></i></button>
                                 </form>
                             </td>

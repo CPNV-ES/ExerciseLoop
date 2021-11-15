@@ -15,9 +15,6 @@ class ExerciseAnsweringController extends Controller
         $exercise = Exercises::find($params['id']);
         $this->checkExerciseValidity($exercise);
 
-        // Generate CSRF Token
-        $_SESSION["token"] = bin2hex(random_bytes(32));
-
         return $this->render('exercise-answering', [
             'exerciseLabel' => 'Exercise: ',
             'exerciseTitle' => $exercise->title,
@@ -32,11 +29,6 @@ class ExerciseAnsweringController extends Controller
 
     public function answer($params)
     {
-        if (!isset($params['post']['token']) || !isset($_SESSION['token']) || $params['post']['token'] != $_SESSION['token']) {
-            echo 'here';
-            exit();
-        }
-
         $exercise = Exercises::find($params['id']);
         $this->checkExerciseValidity($exercise);
 
@@ -62,6 +54,7 @@ class ExerciseAnsweringController extends Controller
         // FastRoute doesn't not implement redirect path yet
         // Redirect to personnel answer editing
         header("Location: /exercise/" . $params['id'] . "/" . $path . "/answer");
+        exit();
     }
 
     public function personalAnswer($params)
@@ -70,9 +63,6 @@ class ExerciseAnsweringController extends Controller
         $this->checkExerciseValidity($exercise);
 
         $submission = Submissions::where('path', $params['path'])->first();
-
-        // Generate CSRF Token
-        $_SESSION["token"] = bin2hex(random_bytes(32));
 
         return $this->render('exercise-answering', [
             'exerciseLabel' => 'Exercise: ',
@@ -100,9 +90,6 @@ class ExerciseAnsweringController extends Controller
             $answer->save();
         }
 
-        // Generate CSRF Token
-        $_SESSION["token"] = bin2hex(random_bytes(32));
-        
         return $this->render('exercise-answering', [
             'exerciseLabel' => 'Exercise: ',
             'exerciseTitle' => $exercise->title,
