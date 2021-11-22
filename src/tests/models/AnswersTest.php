@@ -1,38 +1,59 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use App\Models\Answers;
+require_once dirname(dirname(dirname(__FILE__))) . '/vendor/autoload.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/config/config.php';
 
-require './vendor/autoload.php';
-require './config/config.php';
+use App\Models\Answers;
+use PHPUnit\Framework\TestCase;
 
 class AnswersTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        // TODO DROP DB
-    }
-
+    /**
+     * @covers Answers::all()
+     */
     public function testAll()
     {
         $this->assertEquals(6, count(Answers::all()));
     }
 
-    public function testFind()
+    /**
+     * @covers Answers::find()
+     */
+    public function testFind_ifValueExist()
     {
         $this->assertInstanceOf(Answers::class, Answers::find(1));
+    }
+
+    /**
+     * @covers Answers::find()
+     */
+    public function testFind_ifValueNotExist()
+    {
         $this->assertNull(Answers::find(1000));
     }
 
-    public function testWhere()
+    /**
+     * @covers Answers::where()
+     */
+    public function testWhere_IfResultExist()
     {
         $this->assertEquals(3, count(Answers::where('question_id', 6)->get()));
         $this->assertEquals(2, count(Answers::where('submission_id', 1)->get()));
+    }
+
+    /**
+     * @covers Answers::where()
+     */
+    public function testWhere_IfResultDontExist()
+    {
         $this->assertEquals(0, count(Answers::where('question_id', 1000)->get()));
         $this->assertEquals(0, count(Answers::where('submission_id', 1000)->get()));
     }
 
-
+    /**
+     * @covers  Answers::create(array)
+     * @depends testDelete
+     */
     public function testCreate()
     {
         $answer = Answers::create(["answer" => 'UnitTest Answer', "question_id" => 1, "submission_id" => 1]);
@@ -40,8 +61,13 @@ class AnswersTest extends TestCase
         $this->assertEquals('UnitTest Answer', $answer->answer);
         $this->assertEquals(1, $answer->question_id);
         $this->assertEquals(1, $answer->submission_id);
+        $answer->delete();
     }
 
+    /**
+     * @covers  Answers->save()
+     * @depends testFind_ifValueExist
+     */
     public function testSave()
     {
         $answer = Answers::find(1);
@@ -51,11 +77,17 @@ class AnswersTest extends TestCase
         $this->assertEquals("UnitTest Answer", Answers::find(1)->answer);
     }
 
+    /**
+     * @covers  Answers->delete()
+     * @depends testFind_ifValueExist, testCreate
+     */
     public function testDelete()
     {
-        $answer = Answers::find(1);
+        $answer = Answers::create(['anwer' => 'test', 'question_id' => 1, 'submission_id' => 1]);
+        $id = $answer->id;
         $answer->delete();
 
-        $this->assertNull(Answers::find(1));
+        $this->assertNull(Answers::find($id));
     }
+
 }
