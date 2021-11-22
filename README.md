@@ -10,10 +10,25 @@ The objective is to reproduce the following website [https://stormy-plateau-5448
 
 - PHP 8.0.10
 
-## Run
+## Local Initialisation
+
+### Install depedencies
+
+Move into code directory `src/` and install packages dependencies.
 
 ```php
-php -S localhost:8000
+composer install
+npm install
+```
+
+### Environment
+
+Setup localy the database and your `.env.php` file from `.env-example.php`.
+
+### Start the server
+
+```php
+php -S localhost:8000 -t src/public
 ```
 
 ## Mockup
