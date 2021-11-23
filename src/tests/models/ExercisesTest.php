@@ -69,11 +69,11 @@ class ExercisesTest extends TestCase
      */
     public function testSave()
     {
-        $exercise = Exercises::find(1);
+        $exercise = Exercises::create(["title" => 'UnitTest Exercise', "state_id" => 1]);
         $exercise->title = "UnitTest Title";
         $exercise->save();
-
-        $this->assertEquals("UnitTest Title", Exercises::find(1)->title);
+        $this->assertEquals("UnitTest Title", Exercises::find($exercise->id)->title);
+        $exercise->delete();
     }
 
     /**
@@ -85,7 +85,6 @@ class ExercisesTest extends TestCase
         $exercise = Exercises::create(['title' => 'test', 'state_id' => 1]);
         $id = $exercise->id;
         $exercise->delete();
-
         $this->assertNull(Exercises::find($id));
     }
 }

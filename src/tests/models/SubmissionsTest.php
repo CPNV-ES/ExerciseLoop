@@ -64,15 +64,17 @@ class SubmissionsTest extends TestCase
 
     /**
      * @covers  Submissions::save()
-     * @depends testFind_ifValueExist
+     * @depends testFind_ifValueExist, testDelete
      */
     public function testSave()
     {
-        $submission = Submissions::find(2);
+        $path = md5(uniqid(rand(), true));
+        $submission = Submissions::create(['path' => $path, 'timestamp' => '2000-01-01 01:01:01']);
         $submission->path = "UnitTestPath";
         $submission->save();
 
-        $this->assertEquals("UnitTestPath", Submissions::find(2)->path);
+        $this->assertEquals("UnitTestPath", Submissions::find($submission->id)->path);
+        $submission->delete();
     }
 
     /**

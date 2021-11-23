@@ -70,11 +70,12 @@ class QuestionsTest extends TestCase
      */
     public function testSave()
     {
-        $question = Questions::find(1);
+        $question = Questions::create(["question" => "unitTest", "exercise_id" => 1, "type_id" => 1]);
         $question->question = "Test";
         $question->save();
 
-        $this->assertEquals("Test", Questions::find(1)->question);
+        $this->assertEquals("Test", Questions::find($question->id)->question);
+        $question->delete();
     }
 
     /**
