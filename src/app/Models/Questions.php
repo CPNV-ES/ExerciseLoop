@@ -15,7 +15,7 @@ class Questions extends Model
     protected int $exercise_id;
     protected int $type_id;
 
-    public function answer()
+    public function answers()
     {
         return Answers::where('question_id', $this->id)->get();
     }

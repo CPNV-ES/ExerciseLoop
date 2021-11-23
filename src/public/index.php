@@ -10,7 +10,8 @@ use App\Controllers\HomeController,
     App\Controllers\ExerciseEditingController,
     App\Controllers\ExerciseListController,
     App\Controllers\ExerciseManagementController,
-    App\Controllers\QuestionEditingController;
+    App\Controllers\QuestionEditingController,
+    App\Controllers\ExerciseResultsController;
 
 use App\Controllers\Error,
     App\Controllers\ErrorController;
@@ -38,6 +39,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
     $router->post('/exercise/{id:\d+}/edit/status/{status:\w+}', [ExerciseEditingController::class, 'changeStatus']);
 
     $router->get('/exercises', [ExerciseManagementController::class, 'index']);
+
+    $router->get('/exercise/{id:\d+}/results', [ExerciseResultsController::class, 'index']);
 });
 
 // Fetch method and URI from somewhere
