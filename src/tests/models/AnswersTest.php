@@ -65,20 +65,21 @@ class AnswersTest extends TestCase
     }
 
     /**
-     * @covers  Answers->save()
-     * @depends testFind_ifValueExist
+     * @covers  Answers::save()
+     * @depends testFind_ifValueExist, testDelete
      */
     public function testSave()
     {
-        $answer = Answers::find(1);
-        $answer->answer = "UnitTest Answer";
+        $answer =  Answers::create(["answer" => 'UnitTest Answer', "question_id" => 1, "submission_id" => 1]);
+        $answer->answer = "UnitTest";
         $answer->save();
 
-        $this->assertEquals("UnitTest Answer", Answers::find(1)->answer);
+        $this->assertEquals("UnitTest", Answers::find($answer->id)->answer);
+        $answer->delete();
     }
 
     /**
-     * @covers  Answers->delete()
+     * @covers  Answers::delete()
      * @depends testFind_ifValueExist, testCreate
      */
     public function testDelete()
