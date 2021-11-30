@@ -24,6 +24,7 @@
             <a href="/"><img src="/images/logo.png" alt="Logo of the website" width="84" height="84" /></a>
             <?= isset($exerciseLabel) ? '<span class="exercise-label">' . $exerciseLabel . '</span>' : null ?>
             <?= isset($exerciseTitle) ? '<span class="exercise-title">' . $exerciseTitle . '</span>' : null ?>
+            <?= isset($exerciseRoute) ? '<a href="' . $exerciseRoute['route'] . '" class="exercise-route">' . $exerciseRoute['name'] . '</a>' : null ?>
         </section>
     </header>
     <?= $content ?>

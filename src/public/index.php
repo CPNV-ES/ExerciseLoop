@@ -41,6 +41,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
     $router->get('/exercises', [ExerciseManagementController::class, 'index']);
 
     $router->get('/exercise/{id:\d+}/results', [ExerciseResultsController::class, 'index']);
+    $router->get('/exercise/{id:\d+}/results/question/{questionId:\d+}', [ExerciseResultsController::class, 'focusOnQuestion']);
+    $router->get('/exercise/{id:\d+}/results/submission/{submissionId:\d+}', [ExerciseResultsController::class, 'focusOnSubmission']);
 });
 
 // Fetch method and URI from somewhere
