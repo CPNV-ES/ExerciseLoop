@@ -1,0 +1,13 @@
+header {
+  background-color: var(--green);
+}
+
+th,
+td {
+  padding: 1.2 rem 1.5 rem;
+  line-height: normal;
+}
+
+.answer dt {
+  font-weight: bold;
+}

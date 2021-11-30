@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Databases\Connector;
 use App\Databases\Model;
 
 // Class name need to match with database table
@@ -22,5 +23,22 @@ class Exercises extends Model
     public function state()
     {
         return States::find($this->state_id);
+    }
+
+    public function submissions()
+    {
+        $query = "SELECT s.id, s.path, s.timestamp 
+        FROM submissions as s 
+        INNER JOIN answers a on s.id = a.submission_id 
+        INNER JOIN questions q on a.question_id = q.id 
+        INNER JOIN exercises e on q.exercise_id = e.id 
+        WHERE e.id=:id GROUP BY s.id";
+
+        $stmt = Connector::getInstance()->pdo()->prepare($query);
+        $stmt->execute(['id' => $this->id]);
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, Submissions::class);
+        $result = $stmt->fetchAll();
+
+        return $result;
     }
 }

@@ -52,7 +52,7 @@
                         <tr>
                             <td><?= $anserwing->title ?></td>
                             <td>
-                                <a title="Show results" href=""><i class="fa fa-chart-bar"></i></a>
+                                <a title="Show results" href="/exercise/<?= $anserwing->id ?>/results"><i class="fa fa-chart-bar"></i></a>
                                 <form action="/exercise/<?= $anserwing->id ?>/edit/status/close" method="post">
                                     <?= $this->csrf() ?>
                                     <button type="submit"><i class="fa fa-minus-circle"></i></button>
@@ -77,7 +77,7 @@
                         <tr>
                             <td><?= $closed->title ?></td>
                             <td>
-                                <a title="Show results" href=""><i class="fa fa-chart-bar"></i></a>
+                                <a title="Show results" href="/exercise/<?= $closed->id ?>/results"><i class="fa fa-chart-bar"></i></a>
                                 <form action="/exercise/<?= $closed->id ?>/destroy" method="post">
                                     <?= $this->csrf() ?>
                                     <button type="submit" onclick="return confirm('Are you sure?');"><i class="fa fa-trash"></i></button>
