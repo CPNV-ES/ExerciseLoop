@@ -11,10 +11,12 @@ class ExerciseListController extends Controller
     {
         $exercises = Exercises::where('state_id', States::slug('ANSWER'))->get();
 
-        return $this->render('exercise-list', ['exercises' => $exercises], 
+        return $this->render('exercise-list', [
+            'exercises' => $exercises
+        ], 
         [
             'description' => 'List of all answerable exercises',
-            'keywords' => 'Exercise, List'
+            'keywords'    => 'Exercise, List'
         ]);
     }
 }

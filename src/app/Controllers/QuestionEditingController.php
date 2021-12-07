@@ -20,21 +20,21 @@ class QuestionEditingController extends Controller
         }
 
         return $this->render('question-editing', [
-            'exercise' => $exercise,
-            'question' => $question,
+            'exercise'      => $exercise,
+            'question'      => $question,
             'exerciseLabel' => 'Exercise',
             'exerciseTitle' => $exercise->title,
         ], 
         [
             'description' => 'Question edit form',
-            'keywords' => 'Question, Edition, Form'
+            'keywords'    => 'Question, Edition, Form'
         ]);
     }
 
     public function editQuestion($params)
     {
-        $questionLabel = $params['post']['field']['label'];
-        $questionType = $params['post']['field']['value_kind'];
+        $questionLabel = htmlspecialchars($params['post']['field']['label']);
+        $questionType  = htmlspecialchars($params['post']['field']['value_kind']);
 
         $question = Questions::find($params['questionId']);
         $question->question = $questionLabel;

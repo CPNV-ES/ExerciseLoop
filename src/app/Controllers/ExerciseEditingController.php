@@ -21,17 +21,21 @@ class ExerciseEditingController extends Controller
         return $this->render('exercise-editing', [
             'exerciseLabel' => 'Exercise:',
             'exerciseTitle' => $exercise->title,
-            'exercise' => $exercise
+            'exercise'      => $exercise
         ], 
         [
             'description' => 'Exercise edit form',
-            'keywords' => 'Exercise, Edition, Form'
+            'keywords'    => 'Exercise, Edition, Form'
         ]);
     }
 
     public function createQuestion($params)
     {
-        Questions::create(['question' => $params['post']['field']['label'], 'exercise_id' => $params['id'], 'type_id' => Types::slug($params['post']['field']["value_kind"])]);
+        Questions::create([
+            'question'    => htmlspecialchars($params['post']['field']['label']), 
+            'exercise_id' => htmlspecialchars($params['id']), 
+            'type_id'     => Types::slug(htmlspecialchars($params['post']['field']["value_kind"]))
+        ]);
 
         $this->redirectToExerciseEdition($params['id']);
     }
@@ -47,9 +51,10 @@ class ExerciseEditingController extends Controller
     public function changeStatus($params)
     {
         $exercise = Exercises::find($params['id']);
-        if ($exercise->questions() == []) {
+        if (empty($exercise->questions())) {
             $this->redirectToExerciseEdition($params['id']);
         }
+
         $exercise->state_id = States::slug($params['status']);
         $exercise->save();
 

@@ -9,17 +9,17 @@ class ExerciseManagementController extends Controller
 {
     public function index()
     {
-        $exercisesBuild = Exercises::where('state_id', States::slug('BUILD'))->get();
+        $exercisesBuild  = Exercises::where('state_id', States::slug('BUILD'))->get();
         $exercisesAnswer = Exercises::where('state_id', States::slug('ANSWER'))->get();
-        $exercisesClose = Exercises::where('state_id', States::slug('CLOSE'))->get();
+        $exercisesClose  = Exercises::where('state_id', States::slug('CLOSE'))->get();
 
         return $this->render('exercise-management', [
-            'exercisesBuild' => $exercisesBuild,
+            'exercisesBuild'  => $exercisesBuild,
             'exercisesAnswer' => $exercisesAnswer, 'exercisesClose' => $exercisesClose
         ], 
         [
             'description' => 'List of all exercises and their states',
-            'keywords' => 'Exercise, Exercise Management, Exercise List'
+            'keywords'    => 'Exercise, Exercise Management, Exercise List'
         ]);
     }
 
