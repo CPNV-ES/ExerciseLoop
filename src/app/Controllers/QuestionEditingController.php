@@ -23,7 +23,7 @@ class QuestionEditingController extends Controller
             'exercise'      => $exercise,
             'question'      => $question,
             'exerciseLabel' => 'Exercise',
-            'exerciseTitle' => $exercise->title,
+            'exerciseRoute' => ['route' => '/exercise/' . $exercise->id . '/edit', 'name' => $exercise->title],
         ], 
         [
             'description' => 'Question edit form',

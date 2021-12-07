@@ -20,7 +20,7 @@ class ExerciseEditingController extends Controller
 
         return $this->render('exercise-editing', [
             'exerciseLabel' => 'Exercise:',
-            'exerciseTitle' => $exercise->title,
+            'exerciseRoute' => ['route' => '/exercise/' . $exercise->id . '/edit', 'name' => $exercise->title],
             'exercise'      => $exercise
         ], 
         [
