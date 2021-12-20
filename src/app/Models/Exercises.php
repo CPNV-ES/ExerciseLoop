@@ -41,4 +41,19 @@ class Exercises extends Model
 
         return $result;
     }
+
+    public function isBuild()
+    {
+        return $this->state()->slug === 'BUILD';
+    }
+
+    public function isAnswerable()
+    {
+        return $this->state()->slug === 'ANSWER';
+    }
+
+    public function isClosed()
+    {
+        return $this->state()->slug === 'CLOSE';
+    }
 }
