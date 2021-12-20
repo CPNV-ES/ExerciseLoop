@@ -12,11 +12,12 @@
             <div class="field">
                 <label for="<?= htmlspecialchars($question->question) ?>"><?= htmlspecialchars($question->question) ?></label>
                 <?php if ($question->type()->slug == 'SHORT') : ?>
-                    <input type="text" name="answers[<?= $question->id ?>]" id="<?= $question->id ?>"
+                    <input type="text" name="answers[<?= $question->id ?>]" id="<?= $question->id ?>" maxlength="255"
                            value="<?= isset($submission) ? htmlspecialchars($submission->answer($question->id)->answer) : '' ?>"/>
                 <?php else : ?>
-                    <textarea type="text" name="answers[<?= $question->id ?>]"
-                              id="<?= $question->id ?>"><?= isset($submission) ? htmlspecialchars($submission->answer($question->id)->answer) : '' ?></textarea>
+                    <textarea id="<?= $question->id ?>" name="answers[<?= $question->id ?>]" type="text" maxlength="255">
+                        <?= isset($submission) ? htmlspecialchars($submission->answer($question->id)->answer) : '' ?>
+                    </textarea>
                 <?php endif ?>
             </div>
         <?php endforeach ?>

@@ -44,7 +44,7 @@
                 <?= $this->csrf() ?>
                 <div class="field">
                     <label for="field_label">Label</label>
-                    <input type="text" name="field[label]" id="field_label"/>
+                    <input id="field_label" name="field[label]" type="text" minlength="1" maxlength="255" required/>
                 </div>
 
                 <div class="field">
