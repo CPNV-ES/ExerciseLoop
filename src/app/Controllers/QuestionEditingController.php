@@ -33,8 +33,8 @@ class QuestionEditingController extends Controller
 
     public function editQuestion($params)
     {
-        $questionLabel = htmlspecialchars($params['post']['field']['label']);
-        $questionType  = htmlspecialchars($params['post']['field']['value_kind']);
+        $questionLabel = $params['post']['field']['label'];
+        $questionType  = $params['post']['field']['value_kind'];
 
         $question = Questions::find($params['questionId']);
         $question->question = $questionLabel;

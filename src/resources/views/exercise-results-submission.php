@@ -4,8 +4,8 @@
     <h1><?= $submission->timestamp ?> UTC</h1>
     <dl class="answer">
         <?php foreach ($exercise->questions() as $question) : ?>
-            <dt><?= $question->question ?></dt>
-            <dd><?= $submission->answer($question->id)->answer ?></dd>
+            <dt><?= htmlspecialchars($question->question) ?></dt>
+            <dd><?= htmlspecialchars($submission->answer($question->id)->answer) ?></dd>
         <?php endforeach ?>
     </dl>
 </section>

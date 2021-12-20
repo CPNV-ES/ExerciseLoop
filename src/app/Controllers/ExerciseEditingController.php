@@ -32,9 +32,9 @@ class ExerciseEditingController extends Controller
     public function createQuestion($params)
     {
         Questions::create([
-            'question'    => htmlspecialchars($params['post']['field']['label']), 
-            'exercise_id' => htmlspecialchars($params['id']), 
-            'type_id'     => Types::slug(htmlspecialchars($params['post']['field']["value_kind"]))
+            'question'    => $params['post']['field']['label'],
+            'exercise_id' => $params['id'],
+            'type_id'     => Types::slug($params['post']['field']["value_kind"])
         ]);
 
         $this->redirectToExerciseEdition($params['id']);

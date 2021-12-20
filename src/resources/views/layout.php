@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="author" content="Helene DUBUIS, Armand MARECHAL">
     <meta name="description" content="<?= $metas['description'] ?>">
     <meta name="keywords" content="<?= $metas['keywords'] ?>">
@@ -19,15 +19,15 @@
 </head>
 
 <body>
-    <header class="heading">
-        <section class="container">
-            <a href="/"><img src="/images/logo.png" alt="Logo of the website" width="84" height="84" /></a>
-            <?= isset($exerciseLabel) ? '<span class="exercise-label">' . $exerciseLabel . '</span>' : null ?>
-            <?= isset($exerciseTitle) ? '<span class="exercise-title">' . $exerciseTitle . '</span>' : null ?>
-            <?= isset($exerciseRoute) ? '<a href="' . $exerciseRoute['route'] . '" class="exercise-route">' . $exerciseRoute['name'] . '</a>' : null ?>
-        </section>
-    </header>
-    <?= $content ?>
+<header class="heading">
+    <section class="container">
+        <a href="/"><img src="/images/logo.png" alt="Logo of the website" width="84" height="84"/></a>
+        <?= isset($exerciseLabel) ? '<span class="exercise-label">' . htmlspecialchars($exerciseLabel) . '</span>' : null ?>
+        <?= isset($exerciseTitle) ? '<span class="exercise-title">' . htmlspecialchars($exerciseTitle) . '</span>' : null ?>
+        <?= isset($exerciseRoute) ? '<a href="' . htmlspecialchars($exerciseRoute['route']) . '" class="exercise-route">' . htmlspecialchars($exerciseRoute['name']) . '</a>' : null ?>
+    </section>
+</header>
+<?= $content ?>
 </body>
 
 </html>

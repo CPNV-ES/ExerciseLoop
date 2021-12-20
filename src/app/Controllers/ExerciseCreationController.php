@@ -20,7 +20,7 @@ class ExerciseCreationController extends Controller
 
     public function createExercise($params)
     {
-        $title =  htmlspecialchars($params['post']['title']);
+        $title =  $params['post']['title'];
 
         if (isset($title) && !is_null($title)) {
             $exercise = Exercises::create(['title' => $title, 'state_id' => States::slug('BUILD')]);

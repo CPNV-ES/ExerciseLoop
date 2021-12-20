@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
-use PDOException;
 use App\Models\Answers;
 use App\Models\Exercises;
-use App\Models\Submissions;
 use App\Models\States;
+use App\Models\Submissions;
+use PDOException;
 
 class ExerciseAnsweringController extends Controller
 {
@@ -18,13 +18,21 @@ class ExerciseAnsweringController extends Controller
         return $this->render('exercise-answering', [
             'exerciseLabel' => 'Exercise: ',
             'exerciseTitle' => $exercise->title,
-            'exerciseTips'  => "If you'd like to come back later to finish, simply submit it with blanks",
-            'exercise'      => $exercise
+            'exerciseTips' => "If you'd like to come back later to finish, simply submit it with blanks",
+            'exercise' => $exercise
         ],
-        [
-            'description' => 'Exercise response form',
-            'keywords'    => 'Exercise, Answer, Response, Form'
-        ]);
+            [
+                'description' => 'Exercise response form',
+                'keywords' => 'Exercise, Answer, Response, Form'
+            ]);
+    }
+
+    private function checkExerciseValidity($exercise)
+    {
+        if (empty($exercise) || $exercise->state_id != States::slug('ANSWER')) {
+            (new ErrorController)->index(Error::NOT_FOUND);
+            exit();
+        }
     }
 
     public function answer($params)
@@ -45,8 +53,8 @@ class ExerciseAnsweringController extends Controller
 
         foreach ($params['post']['answers'] as $key => $answer) {
             Answers::create([
-                "answer"        => htmlspecialchars($answer),
-                "question_id"   => htmlspecialchars($key),
+                "answer" => $answer,
+                "question_id" => $key,
                 "submission_id" => $submission->id
             ]);
         }
@@ -62,19 +70,19 @@ class ExerciseAnsweringController extends Controller
         $exercise = Exercises::find($params['id']);
         $this->checkExerciseValidity($exercise);
 
-        $submission = Submissions::where('path', htmlspecialchars($params['path']))->first();
+        $submission = Submissions::where('path', $params['path'])->first();
 
         return $this->render('exercise-answering', [
             'exerciseLabel' => 'Exercise: ',
             'exerciseTitle' => $exercise->title,
-            'exerciseTips'  => "Bookmark this page, it's yours. You'll be able to come back later to finish.",
-            'exercise'      => $exercise,
-            'submission'    => $submission
+            'exerciseTips' => "Bookmark this page, it's yours. You'll be able to come back later to finish.",
+            'exercise' => $exercise,
+            'submission' => $submission
         ],
-        [
-            'description' => 'Exercise response form',
-            'keywords'    => 'Exercise, Answer, Response, Form'
-        ]);
+            [
+                'description' => 'Exercise response form',
+                'keywords' => 'Exercise, Answer, Response, Form'
+            ]);
     }
 
     public function editPersonalAnswer($params)
@@ -82,32 +90,24 @@ class ExerciseAnsweringController extends Controller
         $exercise = Exercises::find($params['id']);
         $this->checkExerciseValidity($exercise);
 
-        $submission = Submissions::where('path', htmlspecialchars($params['path']))->first();
+        $submission = Submissions::where('path', $params['path'])->first();
 
         foreach ($params['post']['answers'] as $key => $newAnswer) {
             $answer = $submission->answer($key);
-            $answer->answer = htmlspecialchars($newAnswer);
+            $answer->answer = $newAnswer;
             $answer->save();
         }
 
         return $this->render('exercise-answering', [
             'exerciseLabel' => 'Exercise: ',
             'exerciseTitle' => $exercise->title,
-            'exerciseTips'  => "Bookmark this page, it's yours. You'll be able to come back later to finish.",
-            'exercise'      => $exercise,
-            'submission'    => $submission
+            'exerciseTips' => "Bookmark this page, it's yours. You'll be able to come back later to finish.",
+            'exercise' => $exercise,
+            'submission' => $submission
         ],
-        [
-            'description' => 'Exercise response form',
-            'keywords'    => 'Exercise, Answer, Response, Form'
-        ]);
-    }
-
-    private function checkExerciseValidity($exercise)
-    {
-        if (empty($exercise) || $exercise->state_id != States::slug('ANSWER')) {
-            (new ErrorController)->index(Error::NOT_FOUND);
-            exit();
-        }
+            [
+                'description' => 'Exercise response form',
+                'keywords' => 'Exercise, Answer, Response, Form'
+            ]);
     }
 }
