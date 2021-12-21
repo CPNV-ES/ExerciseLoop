@@ -17,7 +17,7 @@
 ## Exercise management
 
  - [X] List all the exercises in 3 columns based on their state
- - [~] Destroy an exercise (only when building or closed)
+ - [X] Destroy an exercise (only when building or closed)
  - [X] Change state of an exercise through icon buttons
  - [X] Stats for an exercise: show the recap (all takes, all fields)
  - [X] Stats for an exercise: show the answers of all fields of one take
