@@ -79,8 +79,6 @@ switch ($routeInfo[0]) {
             session_start();
             (new $controllerClass)->$action($params);
         } catch (PDOException $e) {
-            var_dump($e);
-            die();
             (new ErrorController)->index(Error::DATABASE_ERROR);
         }
 
