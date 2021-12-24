@@ -6,34 +6,15 @@ The objective is to reproduce the following website [https://stormy-plateau-5448
 
 [Workflow](https://penfu.notion.site/Projet-8658d04295c949c59c4249380d65ac03)
 
-## Technical specifications
+## Start developping
+You can find an setup procedure [here](../../wiki/Development-env-setup)
 
-- PHP 8.0.10
-
-## Local Initialisation
-
-### Install depedencies
-
-Move into code directory `src/` and install packages dependencies.
-
-```php
-composer install
-npm install
-```
-
-### Environment
-
-Setup localy the database and your `.env.php` file from `.env-example.php`.
-
-### Start the server
-
-```php
-php -S localhost:8000 -t src/public
-```
+## Documentation
+You can find the documentation [here](../../wiki/Home)
 
 ## Mockup
 
-Interactive [prototype](https://www.figma.com/proto/6V3spUnNzcCOZJEgozH3uS/Untitled?page-id=0%3A1&node-id=1%3A38&viewport=271%2C48%2C0.69&scaling=contain&starting-point-node-id=1%3A38) of the views.
+Interactive [prototype](https://www.figma.com/proto/6V3spUnNzcCOZJEgozH3uS/Untitled?page-id=0%3A1&node-id=1%3A38&viewport=271%2C48%2C0.69&scaling=contain&starting-point-node-id=1%3A38) of the app.
 
 ## Lib
 
