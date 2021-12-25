@@ -1,0 +1,17 @@
+header {
+  background-color: var(--green);
+}
+
+th,
+td {
+  padding: 1.2 rem 1.5 rem;
+  line-height: normal;
+}
+
+.empty {
+  color: red;
+}
+
+.short, .filled {
+  color: green;
+}

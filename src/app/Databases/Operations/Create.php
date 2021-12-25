@@ -14,31 +14,21 @@ class Create extends Query
     public function __construct(string $class, array $params)
     {
         parent::__construct($class, $params);
-        $this->build();
+
+        // Build the query
+        $paramsKeys = array_keys($this->params);
+        array_unshift($paramsKeys, 'null');
+        $this->query = 'INSERT INTO ' . $this->table . ' VALUES (' . implode(',:', $paramsKeys) . ');';
     }
 
     /**
-     * Build the query
+     * Perform the query and return the id of inserted row
+     * @return int
      */
-    private function build()
+    public function get(): int
     {
-        $query = 'INSERT INTO ' . $this->table . ' VALUES (null,';
-        foreach ($this->params as $key => $_) {
-            $query .= ':' . $key . ($key !== array_key_last($this->params) ? ',' : null);
-        }
-        $query .= ');';
-
-        $this->query = $query;
-    }
-
-    /**
-     * Execute the query and return the id of inserted row
-     */
-    public function execute(): int
-    {
-        $pdo = Connector::connect();
+        $pdo = Connector::getInstance()->pdo();
         $pdo->prepare($this->query)->execute($this->params);
-
         return $pdo->lastInsertId();
     }
 }

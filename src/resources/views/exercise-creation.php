@@ -1,19 +1,18 @@
-<head>
-  <link rel="stylesheet" href="/public/css/exercise-creation.css">
-</head>
+<link rel="stylesheet" href="/css/exercise-creation.css">
 
 <section class="container">
-  <h1>New Exercise</h1>
+    <h1>New Exercise</h1>
 
-  <form action="/exercises/new" accept-charset="UTF-8" method="post">
+    <form id="form-exercise" action="/exercises/new" method="post">
+        <?= $this->csrf() ?>
+        <div class="field">
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text" minlength="1" maxlength="50" required/>
+        </div>
 
-    <div class="field">
-      <label for="exercise_title">Title</label>
-      <input type="text" name="exercise[title]" id="exercise_title" />
-    </div>
+        <div class="actions">
+            <button type="submit" form="form-exercise">Create Exercise</button>
+        </div>
 
-    <div class="actions">
-      <input type="submit" name="commit" value="Create Exercise" data-disable-with="Create Exercise" />
-    </div>
-  </form>
+    </form>
 </section>

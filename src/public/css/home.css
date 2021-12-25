@@ -6,8 +6,8 @@ header {
 }
 
 header img {
-  margin-bottom: 10px;
-  padding: 2rem;
+  padding: 0;
+  margin: 2rem 0 3.2rem 0;
 }
 
 header h1 {
@@ -20,7 +20,7 @@ header h1 {
 }
 
 #navbar .button {
-    border: none;
+  border: none;
 }
 
 #navbar .button:hover {

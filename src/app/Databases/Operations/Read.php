@@ -9,20 +9,20 @@ use App\Databases\Connector;
 class Read extends Query
 {
     private array $columns;
-    private ?array $conditions;
+    private ?array $whereConditions;
     private string $query;
+    private array $orderBy;
+    private string $orderDirection;
     private bool $returnAsDirectObject = false;
 
     /**
-     * @param Model $class is the Model calling the query
+     * @param string $class is the Model calling the query
      * @param array $columns is an array of object attributes
      */
     public function __construct(string $class, array $columns)
     {
-        $this->columns = $columns;
-
         parent::__construct($class);
-        return $this;
+        $this->columns = $columns;
     }
 
     /**
@@ -31,8 +31,16 @@ class Read extends Query
      */
     public function where(string $column, string|int $value): self
     {
-        $this->conditions[] = $column;
+        $this->whereConditions[] = $column;
         $this->params[$column] = $value;
+
+        return $this;
+    }
+
+    public function orderBy(string $column, ?string $direction = 'asc'): self
+    {
+        $this->orderBy[] = $column;
+        $this->orderDirection = $direction;
 
         return $this;
     }
@@ -52,35 +60,23 @@ class Read extends Query
      */
     public function get(): array | Model | null
     {
-        $query = 'SELECT ';
+        // Build the query
+        $this->query = 'SELECT ' . implode(', ', $this->columns) . ' FROM ' . $this->table;
 
-        foreach ($this->columns as $column) {
-            $query .= $column . ($column !== end($this->columns) ? ', ' : null);
+        if (isset($this->whereConditions) && !empty($this->whereConditions)) {
+            for ($i = 0; $i < count($this->whereConditions); $i++) $this->whereConditions[$i] .= ' = :' . $this->whereConditions[$i];
+            $this->query .= ' WHERE ' . implode(' AND ', $this->whereConditions);
         }
 
-        $query .= ' FROM ' . $this->table;
-
-        if (isset($this->conditions) && !empty($this->conditions)) {
-            $query .= ' WHERE ';
-            foreach ($this->conditions as $condition) {
-                $query .= ($condition !== reset($this->conditions) ? ' AND ' : null) . $condition . ' = :' . $condition;
-            }
+        if (isset($this->orderBy)) {
+            $this->query .= ' ORDER BY ' . implode(', ', $this->orderBy) . ' ' . $this->orderDirection;
         }
 
-        $this->query = $query;
-        return $this->execute();
-    }
-
-    /**
-     * @return Model[]|Model|null
-     */
-    private function execute(): array | Model | null
-    {
-        $stmt = Connector::connect()->prepare($this->query);
+        // Perform the query to the databases
+        $stmt = Connector::getInstance()->pdo()->prepare($this->query);
         $stmt->execute($this->params);
         $stmt->setFetchMode(\PDO::FETCH_CLASS, $this->class);
         $result = $stmt->fetchAll();
-
         return $this->returnAsDirectObject ? (empty($result) ? null : reset($result)) : $result;
     }
 }

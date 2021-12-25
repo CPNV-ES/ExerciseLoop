@@ -4,23 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+  <meta name="author" content="Helene DUBUIS, Armand MARECHAL">
+  <meta name="description" content="Home of ExerciseLooper">
+  <meta name="keywords" content="Home, Exercises">
+
   <title>ExerciseLooper</title>
 
-  <link rel="stylesheet" href="/node_modules/normalize.css/normalize.css">
-  <link rel="stylesheet" href="/node_modules/milligram/dist/milligram.min.css">
-  <link rel="stylesheet" href="/public/css/colors.css">
+  <link rel="stylesheet" href="/css/normalize.css/normalize.css">
+  <link rel="stylesheet" href="/css/milligram/milligram.min.css">
+  <link rel="stylesheet" href="/css/colors.css">
+  <link rel="stylesheet" href="/css/home.css">
 </head>
 
 <body>
-
-  <head>
-    <link rel="stylesheet" href="public/css/home.css">
-  </head>
-
   <header class="dashboard">
     <div class="container">
-      <img src="public/images/logo.png" />
+      <img src="/images/logo.png" alt="Logo of the website" width="84" height="84" />
       <h1>Exercise<br>Looper</h1>
     </div>
   </header>

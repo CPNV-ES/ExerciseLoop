@@ -8,22 +8,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema ExerciseLoop
+-- Schema exerciselooper
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `ExerciseLoop` ;
+DROP SCHEMA IF EXISTS `exerciselooper` ;
 
 -- -----------------------------------------------------
--- Schema ExerciseLoop
+-- Schema exerciselooper
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `ExerciseLoop` DEFAULT CHARACTER SET utf8 ;
-USE `ExerciseLoop` ;
+CREATE SCHEMA IF NOT EXISTS `exerciselooper` DEFAULT CHARACTER SET utf8 ;
+USE `exerciselooper` ;
 
 -- -----------------------------------------------------
--- Table `ExerciseLoop`.`states`
+-- Table `exerciselooper`.`states`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ExerciseLoop`.`states` ;
+DROP TABLE IF EXISTS `exerciselooper`.`states` ;
 
-CREATE TABLE IF NOT EXISTS `ExerciseLoop`.`states` (
+CREATE TABLE IF NOT EXISTS `exerciselooper`.`states` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` CHAR(50) NOT NULL,
   `slug` CHAR(10) NOT NULL,
@@ -33,11 +33,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ExerciseLoop`.`exercises`
+-- Table `exerciselooper`.`exercises`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ExerciseLoop`.`exercises` ;
+DROP TABLE IF EXISTS `exerciselooper`.`exercises` ;
 
-CREATE TABLE IF NOT EXISTS `ExerciseLoop`.`exercises` (
+CREATE TABLE IF NOT EXISTS `exerciselooper`.`exercises` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` CHAR(50) NULL,
   `state_id` INT NOT NULL,
@@ -45,18 +45,18 @@ CREATE TABLE IF NOT EXISTS `ExerciseLoop`.`exercises` (
   INDEX `fk_Question_status_idx` (`state_id` ASC) VISIBLE,
   CONSTRAINT `fk_Question_status`
     FOREIGN KEY (`state_id`)
-    REFERENCES `ExerciseLoop`.`states` (`id`)
+    REFERENCES `exerciselooper`.`states` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ExerciseLoop`.`types`
+-- Table `exerciselooper`.`types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ExerciseLoop`.`types` ;
+DROP TABLE IF EXISTS `exerciselooper`.`types` ;
 
-CREATE TABLE IF NOT EXISTS `ExerciseLoop`.`types` (
+CREATE TABLE IF NOT EXISTS `exerciselooper`.`types` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` CHAR(50) NOT NULL,
   `slug` CHAR(10) NOT NULL,
@@ -66,11 +66,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ExerciseLoop`.`questions`
+-- Table `exerciselooper`.`questions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ExerciseLoop`.`questions` ;
+DROP TABLE IF EXISTS `exerciselooper`.`questions` ;
 
-CREATE TABLE IF NOT EXISTS `ExerciseLoop`.`questions` (
+CREATE TABLE IF NOT EXISTS `exerciselooper`.`questions` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `question` VARCHAR(255) NULL,
   `exercise_id` INT NOT NULL,
@@ -80,23 +80,23 @@ CREATE TABLE IF NOT EXISTS `ExerciseLoop`.`questions` (
   INDEX `fk_questions_types1_idx` (`type_id` ASC) VISIBLE,
   CONSTRAINT `fk_questions_exercise`
     FOREIGN KEY (`exercise_id`)
-    REFERENCES `ExerciseLoop`.`exercises` (`id`)
+    REFERENCES `exerciselooper`.`exercises` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_questions_types`
     FOREIGN KEY (`type_id`)
-    REFERENCES `ExerciseLoop`.`types` (`id`)
+    REFERENCES `exerciselooper`.`types` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ExerciseLoop`.`submissions`
+-- Table `exerciselooper`.`submissions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ExerciseLoop`.`submissions` ;
+DROP TABLE IF EXISTS `exerciselooper`.`submissions` ;
 
-CREATE TABLE IF NOT EXISTS `ExerciseLoop`.`submissions` (
+CREATE TABLE IF NOT EXISTS `exerciselooper`.`submissions` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `path` VARCHAR(45) NOT NULL,
   `timestamp` DATETIME NOT NULL,
@@ -106,11 +106,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ExerciseLoop`.`answers`
+-- Table `exerciselooper`.`answers`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ExerciseLoop`.`answers` ;
+DROP TABLE IF EXISTS `exerciselooper`.`answers` ;
 
-CREATE TABLE IF NOT EXISTS `ExerciseLoop`.`answers` (
+CREATE TABLE IF NOT EXISTS `exerciselooper`.`answers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `answer` VARCHAR(255) NULL,
   `question_id` INT NOT NULL,
@@ -120,12 +120,12 @@ CREATE TABLE IF NOT EXISTS `ExerciseLoop`.`answers` (
   INDEX `fk_answers_tentatives1_idx` (`submission_id` ASC) VISIBLE,
   CONSTRAINT `fk_answers_questions`
     FOREIGN KEY (`question_id`)
-    REFERENCES `ExerciseLoop`.`questions` (`id`)
+    REFERENCES `exerciselooper`.`questions` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_answers_submission`
     FOREIGN KEY (`submission_id`)
-    REFERENCES `ExerciseLoop`.`submissions` (`id`)
+    REFERENCES `exerciselooper`.`submissions` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -143,7 +143,7 @@ INSERT INTO types(NAME,slug)
 VALUES ("Single line text","SHORT"),("List of single lines","MEDIUM"),("Multi-line text","LONG");
 
 INSERT INTO exercises(title, state_id)
-VALUES ("Exercise 1",1),("Exercise 2",1),("Exercise 3",2),("Exercise 4",2), ("Exercise 5",3);
+VALUES ("Exercise 1",1),("Exercise 2",2),("Exercise 3",2),("Exercise 4",1), ("Exercise 5",3);
 
 INSERT INTO questions(question,exercise_id,type_id)
 VALUES ("Question 1",1,1),("Question 2",1,2),("Question 1",2,3),("Question 1",3,3),("Question 2",3,2),("Question 1",5,3);

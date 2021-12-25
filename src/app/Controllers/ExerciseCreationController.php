@@ -2,25 +2,31 @@
 
 namespace App\Controllers;
 
-class ExerciseCreationController
+use App\Models\Exercises;
+use App\Models\States;
+
+class ExerciseCreationController extends Controller
 {
     public function index()
     {
-        $exerciseLabel = 'New exercise';
-
-        ob_start();
-        require VIEW_ROOT . "/exercise-creation.php";
-        $content = ob_get_clean();
-        require VIEW_ROOT . "/layout.php";
+        return $this->render('exercise-creation', [
+                'exerciseLabel' => 'New exercise'
+            ],
+            [
+                'description' => 'Exercise creation form',
+                'keywords'    => 'Exercise, Creation, Build, Form'
+            ]);
     }
 
-    public function createExercise()
+    public function createExercise($params)
     {
-        // Logics
-        // ...
+        $title =  $params['post']['title'];
 
-        // if ok then redirect to the editing view of this exercise (1)
-        header("Location: /exercise/1/edit");
-        exit();
+        if (isset($title) && !is_null($title)) {
+            $exercise = Exercises::create(['title' => $title, 'state_id' => States::slug('BUILD')]);
+            
+            header("Location: /exercise/" . $exercise->id . "/edit");
+            exit();
+        }
     }
 }

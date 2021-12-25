@@ -14,23 +14,11 @@ class Delete extends Query
     public function __construct(string $class, array $params)
     {
         parent::__construct($class, $params);
-        $this->build();
-        $this->execute();
-    }
 
-    /**
-     * Build the query
-     */
-    private function build()
-    {
+        // Build the query
         $this->query = 'DELETE FROM ' . $this->table . ' WHERE ' . array_key_first($this->params) . ' = :' . array_key_first($this->params);
-    }
 
-    /**
-     * Execute the query
-     */
-    private function execute()
-    {
-        Connector::connect()->prepare($this->query)->execute($this->params);
+        // Perform the query to the databases
+        Connector::getInstance()->pdo()->prepare($this->query)->execute($this->params);
     }
 }

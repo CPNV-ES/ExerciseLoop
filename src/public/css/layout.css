@@ -5,10 +5,12 @@ header section {
 
 header img {
   height: 100%;
+  width: auto;
 }
 
 header .exercise-label,
-header .exercise-title {
+header .exercise-title,
+header .exercise-route {
   line-height: 50px;
   color: white;
 }
@@ -20,4 +22,13 @@ header .exercise-label {
 header .exercise-title {
   margin-left: 5px;
   font-weight: bold;
+}
+
+header .exercise-route {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+header .exercise-route:hover {
+  color: #5E5E5E;
 }
